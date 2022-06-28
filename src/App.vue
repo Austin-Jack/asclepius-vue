@@ -11,6 +11,16 @@ export default {
   component:{
 
   },
+  data(){
+    return{
+      // res:''
+    }
+  },
+  mounted(){
+    // this.axios.get("/user").then((res) =>{
+    //    this.res = res
+    // })
+  }
 }
 </script>
 <style lang="scss">
