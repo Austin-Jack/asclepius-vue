@@ -3,15 +3,19 @@ import Router from 'vue-router'
 import Index from './pages/index'
 import Appointment from './pages/appointment'
 import Scheduling from './pages/scheduling'
+import AppointDetail from './pages/appointDetail'
+import Authentication from './pages/authentication'
+import Home from './pages/home'
+
 
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     routes:[
         {   
             path:'/' ,
-            name:'home',
+            name:'home1',
             component: Index,
             redirect:'/index',
             children:[
@@ -19,22 +23,47 @@ export default new Router({
                     path:'/index',
                     name:'index',
                     component:Index
-                },
+                }
             ]
+            
+        },
+        {
+           path:'/home',
+           name:'home',
+           component:Home
         },
         {   
-            path:'/Appointment' ,
+            path:'/appointment' ,
             name:'appointment',
             component: Appointment,
             children:[
-                
+                {
+                    path:'/detail',
+                    component:AppointDetail
+                }
             ]
         },
         {   
             path:'/scheduling' ,
             name:'scheduling',
             component: Scheduling
+        },
+        {
+            path:'/authentication',
+            component: Authentication
         }
 
     ]
 })
+
+// 路由导航守卫
+// router.beforeEach((to,from,next)=>{
+//     if(to.path==='/appointment/detail'){
+//     // 获取token
+//         const uid=window.sessionStorage.getItem('uid')
+//         if(!uid) return next('/authentication')
+//         next();
+//     }
+//     next()
+//   })
+  export default router
