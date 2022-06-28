@@ -1,12 +1,12 @@
 <template>
 <div>
-    <div class = "index">
+    <div class = "header">
        <div class="container">
         <div class="top-left">
-              <a href="javascript:;" class="logo">
-                <img src="../../public/imgs/logo.jpg" class="logo-img" title="林大医院">
+              <a href="/#/home" class="logo">
+                <img src="../assets/imgs/logo.jpg" class="logo-img" title="林大医院">
               </a>
-              <div class="logo-detail"><img src="../../public/imgs/logo1.png" alt=""></div>
+              <div class="logo-detail"><img src="../assets/imgs/logo1.png" alt=""></div>
         </div>
         <div class="top-right">
             <a href="javascript:;" class="items">中文版</a>
@@ -17,7 +17,7 @@
         </div>
        </div>
     </div>
-    <div class="index">
+    <div class="header">
         <div class="nav-bar">
         <a href="/#/index" class="intro">首页</a>
         <a href="javascript:;" class="intro">医院概况</a>
@@ -34,8 +34,8 @@
 <script>
 </script>
 
-<style lang="scss">
-   .index{
+<style lang="scss" scoped>
+   .header{
     box-sizing: border-box;  
     width: 1425px;
     padding:0 97.5px;
@@ -62,7 +62,7 @@
               position:absolute; 
               width:350px;
               height:90px;
-              top:21px;
+              top:5px;
               .logo-img{
                 width:90px;
                 height:90px;
@@ -71,7 +71,7 @@
             .logo-detail{
                 position: absolute;
                 margin-left: 100px;
-                top:27px
+                top:10px
             }
           }
         .top-right{
@@ -101,7 +101,7 @@
                width:20px;
                height:20px;
                top:4px;
-               background:url(../../public/imgs/search.png) no-repeat center;
+               background:url(../assets/imgs/search.png) no-repeat center;
              }
         }
     }

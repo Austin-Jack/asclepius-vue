@@ -4,7 +4,11 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-// axios.defaults.baseURL = ''
+const mock = false 
+if(mock){
+  require('./mock/api')
+}
+axios.defaults.baseURL = '/api'
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
 new Vue({
