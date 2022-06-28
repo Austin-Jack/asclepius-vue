@@ -9,14 +9,6 @@ module.exports = {
           // pathRewrite:{
           //   '/api':''
           // }
-<<<<<<< HEAD
-=======
-          target:'http://192.168.1.135:8080',
-          changeOrigin:true,
-          pathRewrite:{
-            '/api':''
-          }
->>>>>>> d3de877 (fix:fixup conflict)
         }
       }
     },
