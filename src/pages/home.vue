@@ -187,7 +187,8 @@ export default {
 @import url("http://www.wchscu.cn/Public/static/themes/css/lyc.css");
 @import url("http://www.wchscu.cn/Public/static/themes/css/lys.css");
 .ydybox {
-  height: 821px;
+
+  height: 1000px;
   background: url("../assets/imgs/bk.jpeg") no-repeat center;
   background-size: cover;
 }

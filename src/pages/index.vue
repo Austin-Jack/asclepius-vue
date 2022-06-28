@@ -68,10 +68,10 @@ export default{
 }
 </script>
 
+
 <style lang="scss" >
 .swiper-box{
-    width:1430px;
-    height:500px;
+    width:100%;
     // background-color: blue;
     margin-top: 1px;
     --swiper-pagination-color: #00ff33;
@@ -89,7 +89,7 @@ export default{
     }
 }
 .content{
-    width: 1430px;
+    width: 100%;
     .img{
     width: 100%;
     height: 800px;
