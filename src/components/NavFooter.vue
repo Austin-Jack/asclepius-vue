@@ -58,7 +58,7 @@ export default {
 @import '../assets/scss/base.scss';
 @import '../assets/scss/reset.scss';
 .footer{
-  width:1425px;
+  width:100%;
   line-height: 24px;
   background-image:url('../assets/imgs/footer/foot.png');
   background-position-x: 50%;
@@ -67,11 +67,11 @@ export default {
   color: rgb(255, 255, 255);
   .footer1{
     box-sizing: border-box;
-    width: 1425px;
+    width: 100%;
     padding:20px 0;
     border-bottom: solid 1px rgba(255, 255, 255, .2);
     .main{
-        width:1230px;
+        width:80%;
         margin:0 97.5px;
         .list{
           font-size: 14px;
@@ -114,7 +114,7 @@ export default {
 }
    .footer2{
     box-sizing: border-box;
-    width: 1425px;
+    width: 100%;
     padding: 30px 0;
     border-bottom: solid 1px rgba(255, 255, 255, .2);
     .logo-left{
@@ -123,10 +123,10 @@ export default {
 }
    .footer3{
     box-sizing: border-box;
-    width: 1425px;
+    width: 100%;
     padding: 15px 0;
     .main{
-        width:1230px;
+        width:80%;
         margin:0 97.5px;
         .left{ 
          float: left;    

@@ -4,11 +4,19 @@ module.exports = {
       port:8080,
       proxy:{
         '/api':{
+          target:'http://mi.lhlthefirst.com:80',
+          changeOrigin:true,
+          // pathRewrite:{
+          //   '/api':''
+          // }
+<<<<<<< HEAD
+=======
           target:'http://192.168.1.135:8080',
           changeOrigin:true,
           pathRewrite:{
             '/api':''
           }
+>>>>>>> d3de877 (fix:fixup conflict)
         }
       }
     },
