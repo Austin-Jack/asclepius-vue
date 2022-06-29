@@ -1,5 +1,7 @@
 <template>
-  <div class="wrap">
+  <div>
+    <nav-header></nav-header>
+    <div class="wrap">
     <div class="department">
       <el-menu
         class="el-menu-vertical-demo"
@@ -104,10 +106,14 @@
       </div>
     </el-dialog>
   </div>
+   <nav-footer></nav-footer>
+  </div>
 </template>
 
 <script>
 import "../assets/scss/reset.scss";
+import NavHeader from "../components/NavHeader.vue"
+import NavFooter from "../components/NavFooter.vue"
 export default {
   data() {
     return {
@@ -155,6 +161,10 @@ export default {
       showError: false,
     };
   },
+  components :{
+    NavHeader,
+    NavFooter
+  },
   methods: {
     getDoctorSchedule() {},
     getUid() {
@@ -191,7 +201,7 @@ html {
     display: flex;
     margin: 0 auto;
     width: 1226px;
-    height: 700px;
+    height: 800px;
     .department {
       flex: 1;
       background-color: #9e8660;
