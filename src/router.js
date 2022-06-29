@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from './pages/index'
 import Appointment from './pages/appointment'
 import Scheduling from './pages/scheduling'
-import AppointDetail from './pages/appointDetail'
+import AppointDetail from './pages/AppointDetail'
 import Authentication from './pages/authentication'
 import Home from './pages/home'
 
