@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="ydybox">
-      <div
+      <!-- <div
         class="ydybox"
         edit_params="width%3D1920%26height%3D985%26zoom%3D4.5"
-      ></div>
+      ></div> -->
       <div class="ydy1 yindy1">
         <div class="leftbox">
           <div
@@ -187,9 +187,8 @@ export default {
 @import url("http://www.wchscu.cn/Public/static/themes/css/lyc.css");
 @import url("http://www.wchscu.cn/Public/static/themes/css/lys.css");
 .ydybox {
-
-  height: 1000px;
-  background: url("../assets/imgs/bk.jpeg") no-repeat center;
+  height: 821px;
+  background: url("../assets/imgs/home/m2.png") no-repeat center;
   background-size: cover;
 }
 </style>

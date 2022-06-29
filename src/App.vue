@@ -17,7 +17,7 @@ export default {
     }
   },
   mounted(){
-    // this.axios.get("/user").then((res) =>{
+    // this.axios.get("/login/123").then((res) =>{
     //    this.res = res
     // })
   }

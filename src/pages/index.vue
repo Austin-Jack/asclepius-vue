@@ -68,7 +68,6 @@ export default{
 }
 </script>
 
-
 <style lang="scss" >
 .swiper-box{
     width:100%;
@@ -89,7 +88,7 @@ export default{
     }
 }
 .content{
-    width: 100%;
+    width: 1430px;
     .img{
     width: 100%;
     height: 800px;
