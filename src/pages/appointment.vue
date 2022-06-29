@@ -160,15 +160,16 @@ export default {
     getUid() {
       // ...此处为获取token
       const token = window.localStorage.getItem("token");
-      if (token === "undefined") {
+      console.log(token)
+      if (token === null) {
         this.dialogFormVisible = true;
       } else {
-        this.$router.push("/appointment/detail");
+        this.$router.push("/detail");
       }
     },
     async gotoRegister() {
       //... 此处请求获取验证结果 验证成功则获取卡信息跳转至预约界面
-      const res = await this.axios.get(`/api/login/${this.verificationCode}`);
+      const res = await this.axios.get(`/login/${this.verificationCode}`);
       if (res.code === 422) {
         this.showError = true;
       } else {
@@ -177,7 +178,7 @@ export default {
         // window.localStorage.setItem("token", res.data.token);
         window.localStorage.setItem("token", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE1MTI1NDQyOTksImV4cCI6MTUxMjYzMDY5OX0.eGrsrvwHm-tPsO9r_pxHIQ5i5L1kX9RX444uwnRGaIM")
         this.dialogFormVisible = false;
-        this.$router.push("/appointment/detail");
+        this.$router.push("/detail");
       }
     },
   },
