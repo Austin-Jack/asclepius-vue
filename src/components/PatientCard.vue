@@ -47,7 +47,7 @@ export default {
 
               ],
               tel: [
-
+                { required: true, message: '请输入号码', trigger: 'blur' },
               ],
               identityID: [
 
