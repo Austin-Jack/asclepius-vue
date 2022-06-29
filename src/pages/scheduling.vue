@@ -4,12 +4,12 @@
     <div class="container">
        <div class="main">
           <div class="nav-menu">
-            <ul class="menu-wrap">
-               <li class="menu-item">
-                <a href="javascript:;">内科</a>
+            <ul class="menu-wrap" >
+               <li class="menu-item" v-for= "(item,index) in roomList" :key = "index">
+                <a href="javascript:;">{{item.name}}</a>
                 <div class="children">
-                   <ul v-for = "(item,index) in menuList" :key = "index">
-                    <li @click="getTable" v-for = "(sub,id) in item" :key="id">{{sub.name}}</li>
+                   <ul >
+                    <li @click="getTable" v-for = "(items,index) in item.data" :key = "index">{{items.name}}</li>
                    </ul>
                 </div>
                 <div class="table-wrap" style="display: none;">
@@ -53,30 +53,6 @@
                 </table>
                 </div>
                </li>
-               <!-- <li class="menu-item">
-                <a href="javascript:;">内科</a>
-               </li>
-               <li class="menu-item">
-                <a href="javascript:;">内科</a>
-               </li>
-               <li class="menu-item">
-                <a href="javascript:;">内科</a>
-               </li>
-               <li class="menu-item">
-                <a href="javascript:;">内科</a>
-               </li>
-               <li class="menu-item">
-                <a href="javascript:;">内科</a>
-               </li>
-               <li class="menu-item">
-                <a href="javascript:;">内科</a>
-               </li>
-               <li class="menu-item">
-                <a href="javascript:;">内科</a>
-               </li>
-               <li class="menu-item">
-                <a href="javascript:;">内科</a>
-               </li> -->
             </ul>
           </div>
           <div class="nav-type">
@@ -104,24 +80,41 @@ export default {
     name:'sche',
     data(){
       return{
-        menuList: [
-          [
-          {
-            id:'1',
-            name:'肾病内科',
-            data:{
-              
+        roomList:[       
+            {
+              c_id:'1',
+              name:'内科',
+              data:[
+                {
+                  p_id:'1',
+                  name:'肾病内科',
+                },
+                {
+                  p_id:'2',
+                  name:'消化内科'
+                },
+                {
+                  p_id:'3',
+                  name:'风湿科'
+                }
+                ]
             }
-          },
-          {
-            id:'2',
-            name:'消化内科'
-          },
-          {
-            id:'3',
-            name:'风湿科'
-          }
-          ]
+          , 
+              {
+                c_id:'2',
+                name:'外科',
+                data:[
+                  {
+                    p_id:'3',
+                    name:'腿外科'
+                  },
+                  {
+                    p_id:'4',
+                    name:'手部外科'
+                  }
+                ]
+              }
+          
         ]
       }
     },

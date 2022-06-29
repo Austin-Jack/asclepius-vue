@@ -17,7 +17,7 @@ const router = new Router({
             path:'/' ,
             name:'home1',
             component: Index,
-            redirect:'/detail',
+            redirect:'/index',
             children:[
                 {
                     path:'/index',
