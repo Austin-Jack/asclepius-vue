@@ -6,9 +6,9 @@ module.exports = {
         '/api':{
           target:'http://mi.lhlthefirst.com:80',
           changeOrigin:true,
-          // pathRewrite:{
-          //   '/api':''
-          // }
+          pathRewrite:{
+            '/api':'/api'
+          }
         }
       }
     },
