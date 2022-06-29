@@ -17,7 +17,7 @@ const router = new Router({
             path:'/' ,
             name:'home1',
             component: Index,
-            redirect:'/index',
+            redirect:'/detail',
             children:[
                 {
                     path:'/index',
@@ -36,12 +36,10 @@ const router = new Router({
             path:'/appointment' ,
             name:'appointment',
             component: Appointment,
-            children:[
-                {
-                    path:'/detail',
-                    component:AppointDetail
-                }
-            ]
+        },
+        {
+            path:'/detail',
+            component:AppointDetail
         },
         {   
             path:'/scheduling' ,
