@@ -10,7 +10,7 @@ const mock = false
 if(mock){
   require('./mock/api')
 }
-
+axios.defaults.baseURL = '/api'
 // 请求拦截器
 axios.interceptors.request.use(config=>{
   // config为请求对象 拦截后必须return
