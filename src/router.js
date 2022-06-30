@@ -6,7 +6,7 @@ import Scheduling from './pages/scheduling'
 import AppointDetail from './pages/AppointDetail'
 import Authentication from './pages/authentication'
 import Home from './pages/home'
-
+import UserCenter from './pages/userCenter'
 
 
 Vue.use(Router)
@@ -49,19 +49,23 @@ const router = new Router({
         {
             path:'/authentication',
             component: Authentication
+        },
+        {
+            path:'/userCenter',
+            component: UserCenter
         }
 
     ]
 })
 
-// 路由导航守卫
+
 // router.beforeEach((to,from,next)=>{
-//     if(to.path==='/appointment/detail'){
-//     // 获取token
-//         const uid=window.sessionStorage.getItem('uid')
-//         if(!uid) return next('/authentication')
-//         next();
-//     }
-//     next()
+//      if(to.path === '/userCenter'){
+//         const id = localStorage.getItem('token')
+//         if(id){ next()}
+//         else { alert('请先进行登录') }
+//      }else{
+//         next()
+//      }
 //   })
   export default router
