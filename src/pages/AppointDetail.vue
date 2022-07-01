@@ -37,12 +37,12 @@
             <el-divider content-position="center"
               ><span style="color: #6375b7">选择就诊人</span></el-divider
             >
-            <el-select v-model="appointForm.cid" placeholder="请选择就诊人">
+            <el-select v-model="appointForm.cId" placeholder="请选择就诊人">
               <el-option
                 v-for="p in ofPatient"
-                :key="p.cid"
+                :key="p.cId"
                 :label="p.name"
-                :value="p.cid"
+                :value="p.cId"
               ></el-option>
             </el-select>
             <el-button
@@ -75,6 +75,7 @@ import PatientCard from '../components/PatientCard.vue'
 export default {
   data() {
     return {
+      // 预约信息
       appointForm: {
         hospital: "林大医院",
         department: "普通内科",
@@ -94,35 +95,32 @@ export default {
         "2022-6-30 周四 8:00-9:00",
         "2022-6-30 周四 8:00-9:00",
       ],
-      ofPatient: [
-        {
-          cid: 10001,
-          identityID: "451423194408201455",
-          name: "徐凤英",
-          sex: 0,
-          age: 34,
-          tel: "15797887094",
-        },
-        {
-          cid: 10002,
-          identityID: "451423194408201456",
-          name: "徐小妹",
-          sex: 0,
-          age: 30,
-          tel: "15797888134",
-        },
-      ],
-      
+      // 就诊人信息
+      ofPatient: [],
       dialogVisible:false
     };
   },
+  created(){
+    this.getPatients()
+  },
   methods: {
+    // 获取就诊人信息
+    async getPatients(){
+      const uid = window.localStorage.getItem("uid")
+      const res = await this.axios.get("/user/getCards",{uId:uid})
+      this.ofPatient = res.data
+    },
+    // 打开添加就诊人弹窗
     addCard() {
       this.dialogVisible = true
     },
+    // 确认就诊人信息后关闭弹窗
     getCardInfo(){
       this.dialogVisible= false
+      // 更新就诊人信息
+      this.getPatients()
     },
+    // 就诊时间或就诊人未填写时提示错误
     confirmAppoint(){
       if(this.appointForm.cid === null || this.appointForm.time === ""){
         this.$message.error('请填写完整！')

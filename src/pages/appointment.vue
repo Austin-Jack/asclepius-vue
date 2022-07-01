@@ -133,8 +133,9 @@ export default {
       if (res.code === 422) {
         this.showError = true;
       } else {
-        // this.uid = res.data.u_id;
-        this.uid = 1445; //先伪造uid等待接口完善
+        //等待接口完善
+        // window.localStorage.setItem("uid", res.data.uId)
+        window.localStorage.setItem("uid", 1225)
         // window.localStorage.setItem("token", res.data.token);
         window.localStorage.setItem(
           "token",

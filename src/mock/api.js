@@ -309,3 +309,42 @@ Mock.mock("/api/doctor/2",[
     }
 ])
 
+// 获取就诊人信息
+Mock.mock(RegExp('/user/getCards' + '.*'),[
+  {
+    "cId": 10001, //卡片id
+    "identityID": "451423194408201455", //身份证
+    "sex": 0, //性别
+    "age": 34, //年龄
+    "name": "徐凤英", //姓名
+    "telNumber": "15797887094" //电话号码
+  },
+  {
+    "cId": 10007, //卡片id
+    "identityID": "360803194502028138", //身份证
+    "sex": 1, //性别
+    "age": 80, //年龄
+    "name": "卢成", //姓名
+    "telNumber": "18101632437" //电话号码
+      }
+]
+)
+
+// 添加就诊人
+Mock.mock("/api/user/addCard",'post',(options)=>{
+  console.log(options.body);
+  return {
+    "code":200,
+    "message":"",
+    "data":null
+      // form:{
+      //   "uId":uId,
+      //   "cId": "@increment()",
+      //   "identityID": identityID, //身份证
+      //   "sex": sex, //性别
+      //   "age": age, //年龄
+      //   "name": name, //姓名
+      //   "telNumber": telNumber //电话号码
+      // }
+  }
+})
