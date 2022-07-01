@@ -16,15 +16,15 @@
                 <table class="table-main" cellpadding="20" cellspacing="0">
                     <tr class="head">
                       <th class="head">班次/周次</th>
-                      <td class="head">周一</td>
-                      <td class="head">周二</td>
+                      <td class="head" v-for="(item,index) of Dates" :key="index">{{item}}</td>
+                      <!-- <td class="head">周二</td>
                       <td class="head">周三</td>
                       <td class="head">周四</td>
                       <td class="head">周五</td>
                       <td class="head">周六</td>
-                      <td class="head">周日</td>
+                      <td class="head">周日</td> -->
                     </tr>
-                    <tr v-for="(item,id) in Data" :key="id">
+                    <tr>
                       <th class="doc" rowspan="2">上午</th>
                       <td class="doc" rowspan="2" v-for = "(item,index) of AM" :key="index">{{item.am.join('\r')}}</td>
                     </tr>
@@ -47,9 +47,9 @@
             <div class="list">
               <h2 class="title">门诊排班</h2>
               <ul class="ul">
-                <li><a href="javascript:;">普通门诊</a></li>
-                <li><a href="javascript:;">专家门诊</a></li>
-                <li><a href="javascript:;">国际门诊</a></li>
+                <li><a href="javascript:;" @click="requestData()">普通门诊</a></li>
+                <li><a href="javascript:;" @click="requestData()">专家门诊</a></li>
+                <li><a href="javascript:;" @click="requestData()">国际门诊</a></li>
               </ul>
             </div>
             <div class="blank"></div>
@@ -68,68 +68,13 @@ export default {
     name:'sche',
     data(){
       return{
-        roomList:[       
-            {
-              name:'内科',
-              data:[
-                {
-                  dId:'2',
-                  name:'肾病内科',
-                },
-                {
-                  dId:'3',
-                  name:'消化内科',
-                },
-                {
-                  dId:'4',
-                  name:'风湿科',
-                }
-                ]
-            }
-          , 
-              {
-                name:'外科',
-                data:[
-                  {
-                    dId:'5',
-                    name:'腿外科',
-                    data:[]
-                  },
-                  {
-                    dId:'6',
-                    name:'手部外科',
-                    data:[]
-                  }
-                ]
-              }
-          
+        roomList:[           
         ],
-        Data:[
-          {
-            dId:'2',
-            name:'肾病内科',
-            data:[
-                {"am":["韩淑英", "叶鹏"]},
-                {"pm":["陈秀云", "尉坤"]},      		    
-                {"am":[""]},
-                {"pm":[""]},
-                {"am":["韩淑英", "叶鹏"]},
-                {"pm":[""]},
-                {"am":[""]},
-                {"pm":[""]},
-                {"am":[""]},
-                {"pm":[""]},
-                {"am":["韩淑英", "叶鹏"]},
-                {"pm":[""]},
-                {"am":[""]},
-                {"pm":[""]},
-            ]
-        }
-        ],
+        Data:[],
         List_data:[],
         AM:[],
         PM:[],
-        Date:[]
+        Dates:[]
       }
     },
     components:{
@@ -138,6 +83,14 @@ export default {
     },
     mounted(){
       this.getDate()
+      this.axios.get('/user').then((res) => {
+        this.Data.push(res.data.data)
+      })
+      this.axios.get('/roomList').then((res) =>{
+      for(let i = 0; i < res.data.data.length; i++){
+        this.roomList.push(res.data.data[i])
+      }
+      })
     },
     methods:{
       getTable(id){
@@ -171,7 +124,6 @@ export default {
           for(let i = 0; i < data.length; i = i + 2){
             this.AM.push(data[i])
         }
-        console.log(this.AM);
        },
         getPm(data){ 
            for(let i = 1; i < data.length; i = i + 2){
@@ -179,36 +131,29 @@ export default {
         }
         },
         getDate(){
+          this.Date = []
           let date = new Date();
           let month = date.getMonth() + 1;
           let dates = date.getDate()
           let day = date.getDay()
           var arr = [ "周日","周一","周二","周三","周四","周五","周六",];
-          let Fdate = ( month + "月" + dates + "日" + arr[day])
+          // let Fdate = ( month + "月" + dates + "日" + arr[day])
           for(let i = 0; i < 7; i++){
-            // while(month == (1||3||5||7||8||10||12)){
-            //   if((dates + i) > 31){
-            //     let Fdate = ((month + 1) + "月" + ((dates + i)%31) + "日" + arr[(day + i) %7])
-            //     this.Date.push(Fdate)
-            //   }else{
-            //     let Fdate = ( month + "月" + ((dates + i)) + "日" + arr[(day + i) %7])
-            //     this.Date.push(Fdate)
-            //   }
-            // }
-            // while(month == (4||6||9||11)){
-            //   if((dates + i) > 30){
-            //     let Fdate = ((month + 1) + "月" + ((dates + i)%30) + "日" + arr[(day + i) %7])
-            //     this.Date.push(Fdate)
-            //   }else{
-            //     let Fdate = ( month + "月" + ((dates + i)) + "日" + arr[(day + i) %7])
-            //     this.Date.push(Fdate)
-            //   }
-            // }
+            // eslint-disable-next-line no-constant-condition
+            while(month == 7){
+              if((dates + i) > 31){
+                let Fdate = ((month + 1) + "月" + ((dates + i)%31) + "日" + arr[(day + i) %7])
+                this.Dates.push(Fdate)
+                break
+              }else{
+                let Fdate = ( month + "月" + ((dates + i)) + "日" + arr[(day + i) %7])
+                this.Dates.push(Fdate)
+                break
+              }
+            }
           }
-          console.log(Fdate);
        }
-      }
-      
+      } 
       }
     
 </script>

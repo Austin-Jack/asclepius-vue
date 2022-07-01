@@ -189,7 +189,7 @@ export default {
 .ydybox {
 
   height: 1000px;
-  background: url("../assets/imgs/bk.jpeg") no-repeat center;
+  background: url("../assets/imgs/home/m2.png") no-repeat center;
   background-size: cover;
 }
 </style>
