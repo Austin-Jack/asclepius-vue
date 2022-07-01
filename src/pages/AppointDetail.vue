@@ -37,7 +37,7 @@
             <el-divider content-position="center"
               ><span style="color: #6375b7">选择就诊人</span></el-divider
             >
-            <el-select v-model="cid" placeholder="请选择就诊人">
+            <el-select v-model="appointForm.cid" placeholder="请选择就诊人">
               <el-option
                 v-for="p in ofPatient"
                 :key="p.cid"
@@ -54,7 +54,7 @@
               >添加就诊人</el-button
             >
           </el-card>
-          <el-button type="primary" class="subBtn">确认提交</el-button>
+          <el-button type="primary" class="subBtn" @click="confirmAppoint">确认提交</el-button>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
       :visible.sync="dialogVisible"
       width="30%"
     >
-      <PatientCard @getCard="getCardInfo"></PatientCard>
+      <PatientCard @getCard="getCardInfo" @cancelCard = "dialogVisible= false"></PatientCard>
     </el-dialog>
   </div>
 </template>
@@ -82,6 +82,7 @@ export default {
         position: "主任医师",
         time: "",
         price: 30,
+        cid: null,
       },
       access_time: [
         "2022-6-29 周三 8:00-9:00",
@@ -111,7 +112,7 @@ export default {
           tel: "15797888134",
         },
       ],
-      cid: null,
+      
       dialogVisible:false
     };
   },
@@ -121,6 +122,11 @@ export default {
     },
     getCardInfo(){
       this.dialogVisible= false
+    },
+    confirmAppoint(){
+      if(this.appointForm.cid === null || this.appointForm.time === ""){
+        this.$message.error('请填写完整！')
+      }
     }
   },
   components: {

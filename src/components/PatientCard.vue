@@ -25,7 +25,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">确认提交</el-button>
-      <el-button>取消</el-button>
+      <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -90,6 +90,9 @@ export default {
         } 
       });
     },
+    cancel(){
+      this.$emit("cancelCard")
+    }
   },
 };
 </script>
