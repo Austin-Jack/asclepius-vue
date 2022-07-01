@@ -2,175 +2,125 @@
   <div>
     <nav-header></nav-header>
     <div class="wrap">
-    <div class="department">
-      <el-menu
-        class="el-menu-vertical-demo"
-        background-color="#9e8660"
-        text-color="#fff"
-        :unique-opened="true"
-      >
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-location" style="color: #fff"></i>
-            <span>内科</span>
-          </template>
-          <el-menu-item index="1-1" @click="getDoctorSchedule"
-            >血液科</el-menu-item
+      <div class="department">
+        <el-menu
+          class="el-menu-vertical-demo"
+          background-color="#9e8660"
+          text-color="#fff"
+          active-text-color="	#FFA500"
+          :unique-opened="true"
+        >
+          <el-submenu
+            v-for="(cli, idx) in departments"
+            :key="idx"
+            :index="idx + ''"
           >
-          <el-menu-item index="1-2">消化内科</el-menu-item>
-          <el-menu-item index="1-3">呼吸内科</el-menu-item>
-          <el-menu-item index="1-4">心血管科</el-menu-item>
-          <el-menu-item index="1-5">神经内科</el-menu-item>
-          <el-menu-item index="1-6">肾病内科</el-menu-item>
-          <el-menu-item index="1-7">内分泌科</el-menu-item>
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-menu" style="color: #fff"></i>
-            <span slot="title">外科</span>
-          </template>
-          <el-menu-item index="2-1">普通外科</el-menu-item>
-          <el-menu-item index="2-2">心胸外科</el-menu-item>
-          <el-menu-item index="2-3">神经外科</el-menu-item>
-          <el-menu-item index="2-4">泌尿外科</el-menu-item>
-          <el-menu-item index="2-5">骨科</el-menu-item>
-        </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">
-            <i class="el-icon-document" style="color: #fff"></i>
-            <span slot="title">妇产科</span>
-          </template>
-        </el-submenu>
-        <el-submenu index="4">
-          <template slot="title">
-            <i class="el-icon-setting" style="color: #fff"></i>
-            <span slot="title">儿科</span>
-          </template>
-        </el-submenu>
-        <el-submenu index="5">
-          <template slot="title">
-            <i class="el-icon-setting" style="color: #fff"></i>
-            <span slot="title">眼科</span>
-          </template>
-        </el-submenu>
-        <el-submenu index="6">
-          <template slot="title">
-            <i class="el-icon-setting" style="color: #fff"></i>
-            <span slot="title">口腔科</span>
-          </template>
-        </el-submenu>
-      </el-menu>
-    </div>
-    <div class="main">
-      <div class="doctor">
-        <div class="doctor_item" v-for="item in doctorList" :key="item.id">
-          <img :src="item.photoUrl" class="photo" />
-          <div class="introduction">
-            <div class="doctorName">{{ item.name }}</div>
-            <div class="doctorPosition">{{ item.position }}</div>
-            <el-button
-              size="mini"
-              type="primary"
-              icon="el-icon-edit-outline "
-              @click="getUid"
-              >挂号</el-button
+            <template slot="title">
+              <i class="el-icon-location" style="color: #fff"></i>
+              <span>{{ cli.cliName }}</span>
+            </template>
+            <el-menu-item @click="getDoctors(depart.dId)"
+              v-for="depart in cli.departments"
+              :key="depart.dId"
+              :index="depart.dId + ''"
+              >{{ depart.name }}</el-menu-item
             >
+          </el-submenu>
+        </el-menu>
+      </div>
+      <div class="main">
+        <div class="doctor">
+          <div class="doctor_item" v-for="item in doctorList" :key="item.docId" >
+            <img :src="item.docImage" class="photo" />
+            <div class="introduction">
+              <div class="doctorName">{{ item.docName }}</div>
+              <div class="doctorPosition">{{doctorRank[item.docRank]}}</div>
+              <el-button
+                size="mini"
+                type="primary"
+                icon="el-icon-edit-outline "
+                @click="getToken"
+                >挂号</el-button
+              >
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <el-dialog
-      title="扫码获取验证码"
-      :visible.sync="dialogFormVisible"
-      center=""
-      width="30%"
-    >
-      <div class="codeform">
-        <img src="../assets/images/weixin.png" alt="" />
-        <div class="codelock">
-          <el-input
-            placeholder="请输入验证码"
-            prefix-icon="el-icon-unlock"
-            v-model="verificationCode"
-            @focus="showError = false"
-            oninput="value=value.replace(/[^0-9]/g,'')"
-            style="width: 180px"
-          >
-          </el-input>
-          <span v-show="showError">验证码错误！</span>
+      <el-dialog
+        title="扫码获取验证码"
+        :visible.sync="dialogFormVisible"
+        center=""
+        width="30%"
+      >
+        <div class="codeform">
+          <img src="../assets/images/weixin.png" alt="" />
+          <div class="codelock">
+            <el-input
+              placeholder="请输入验证码"
+              prefix-icon="el-icon-unlock"
+              v-model="verificationCode"
+              @focus="showError = false"
+              oninput="value=value.replace(/[^0-9]/g,'')"
+              style="width: 180px"
+            >
+            </el-input>
+            <span v-show="showError">验证码错误！</span>
+          </div>
         </div>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="gotoRegister">确 定</el-button>
-      </div>
-    </el-dialog>
-  </div>
-   <nav-footer></nav-footer>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="gotoRegister">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <nav-footer></nav-footer>
   </div>
 </template>
 
 <script>
 import "../assets/scss/reset.scss";
-import NavHeader from "../components/NavHeader.vue"
-import NavFooter from "../components/NavFooter.vue"
+import NavHeader from "../components/NavHeader.vue";
+import NavFooter from "../components/NavFooter.vue";
 export default {
   data() {
     return {
-      doctorList: [
-        {
-          id: 1,
-          name: "费贵军",
-          position: "血液科副主任 主任医师",
-          photoUrl: require("../assets/images/doctor.jpg"),
-        },
-        {
-          id: 2,
-          name: "费贵军",
-          position: "血液科副主任 主任医师",
-          photoUrl: require("../assets/images/li.jpg"),
-        },
-        {
-          id: 3,
-          name: "费贵军",
-          position: "血液科副主任 主任医师",
-          photoUrl: require("../assets/images/liji.jpg"),
-        },
-        {
-          id: 4,
-          name: "费贵军",
-          position: "血液科副主任 主任医师",
-          photoUrl: require("../assets/images/wu.jpg"),
-        },
-        {
-          id: 5,
-          name: "费贵军",
-          position: "血液科副主任 主任医师",
-          photoUrl: require("../assets/images/ke.jpg"),
-        },
-        {
-          id: 6,
-          name: "费贵军",
-          position: "血液科副主任 主任医师",
-          photoUrl: require("../assets/images/yang.jpg"),
-        },
-      ],
+      doctorRank:["主任医师","副主任医师","普通医师"],
+      doctorList: [],
+      // 科室列表
+      departments: [],
       dialogFormVisible: false,
       verificationCode: null,
       uid: null,
       showError: false,
     };
   },
-  components :{
+  components: {
     NavHeader,
-    NavFooter
+    NavFooter,
+  },
+  created() {
+    // 获取科室列表
+    this.getdepartment();
+    this.getDoctors()
   },
   methods: {
-    getDoctorSchedule() {},
-    getUid() {
+    // 获取科室列表
+    async getdepartment() {
+      const res = await this.axios.get("/department/showAll");
+      console.log(res);
+      this.departments = res.data;
+    },
+    async getDoctors(dId){
+      const res = await this.axios.get(`/doctor/${dId}`);
+      // const res = await this.axios.get(`/doctor/2`)
+      console.log(res)
+      this.doctorList = res.data;
+    },
+    // 获取token验证
+    getToken() {
       // ...此处为获取token
       const token = window.localStorage.getItem("token");
-      console.log(token)
+      console.log(token);
       if (token === null) {
         this.dialogFormVisible = true;
       } else {
@@ -183,10 +133,13 @@ export default {
       if (res.code === 422) {
         this.showError = true;
       } else {
-        // this.uid = res.data.u_id; 
-        this.uid = 1445  //先伪造uid等待接口完善
+        // this.uid = res.data.u_id;
+        this.uid = 1445; //先伪造uid等待接口完善
         // window.localStorage.setItem("token", res.data.token);
-        window.localStorage.setItem("token", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE1MTI1NDQyOTksImV4cCI6MTUxMjYzMDY5OX0.eGrsrvwHm-tPsO9r_pxHIQ5i5L1kX9RX444uwnRGaIM")
+        window.localStorage.setItem(
+          "token",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE1MTI1NDQyOTksImV4cCI6MTUxMjYzMDY5OX0.eGrsrvwHm-tPsO9r_pxHIQ5i5L1kX9RX444uwnRGaIM"
+        );
         this.dialogFormVisible = false;
         this.$router.push("/detail");
       }
@@ -200,7 +153,7 @@ html {
   .wrap {
     display: flex;
     margin: 0 auto;
-    width: 1226px;
+    width: 1250px;
     height: 800px;
     .department {
       flex: 1;
@@ -213,7 +166,7 @@ html {
       .doctor {
         height: 100%;
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-start;
         align-content: flex-start;
         flex-wrap: wrap;
         padding-top: 20px;
