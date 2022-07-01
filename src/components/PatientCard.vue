@@ -17,8 +17,8 @@
         <el-radio :label="0">女</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="手机号码" prop="tel">
-      <el-input v-model="cardForm.tel"></el-input>
+    <el-form-item label="手机号码" prop="telNumber">
+      <el-input v-model="cardForm.telNumber"></el-input>
     </el-form-item>
     <el-form-item label="证件号码" prop="identityID">
       <el-input v-model="cardForm.identityID"></el-input>
@@ -58,14 +58,14 @@ export default {
         name: "刘畅",
         age: 20,
         sex: 0,
-        tel: "15773187573",
+        telNumber: "15773187573",
         identityID: "43042120010417900X",
       },
       // 就诊卡的验证规则
       pcardRules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         age: [{ required: true, message: "请输入年龄", trigger: "blur" }],
-        tel: [
+        telNumber: [
           { required: true, message: "请输入号码", trigger: "blur" },
           { validator: checkMobile, trigger: "blur" },
         ],
@@ -76,17 +76,25 @@ export default {
       },
     };
   },
+  created() {
+    this.cardForm.uId = window.localStorage.getItem("uid")
+  },
   methods: {
     
     onSubmit() {
-      this.$refs.addCardform.validate((valid) => {
+      this.$refs.addCardform.validate(async (valid) => {
         // 提交前验证 未通过则返回
         if (!valid) {
           return;
         } else {
         // 通过验证则发送请求 添加就诊人
-        // ...
+          const res = await this.axios.post("user/addCard",this.cardForm)
+          console.log(res)
+          if(res.data.code === 200){
           this.$emit("getCard")
+          }else{
+            this.$message.error("添加失败！")
+          }
         } 
       });
     },
