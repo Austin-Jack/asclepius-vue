@@ -23,11 +23,16 @@
         </div>
     </div>
     <div class="footer2">
+      <div class="main2">
       <div class="logo-left">
         <img src="../assets/imgs/logo3.png" alt="">
       </div>
-      <div class="logo-right">
-      </div>
+      <ul class="logo-right">
+          <li><img src="../assets/imgs/footer/r1.png" alt=""></li>
+          <li><img src="../assets/imgs/footer/r3.png" alt=""></li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
     </div>
     <div class="footer3">
         <div class="main">
@@ -54,7 +59,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 @import '../assets/scss/base.scss';
 @import '../assets/scss/reset.scss';
 .footer{
@@ -112,16 +117,26 @@ export default {
         }
     }
 }
-   .footer2{
+  .footer2{
     box-sizing: border-box;
     width: 100%;
     padding: 30px 0;
     border-bottom: solid 1px rgba(255, 255, 255, .2);
+   .main2{
+    margin: 0 97.5px;
     .logo-left{
-      margin-left: 40px;
+      float: left;
     }
+    .logo-right{
+      float: right;
+      text-align: center;
+      li{
+        float: left;
+      }
+    }
+   }
 }
-   .footer3{
+  .footer3{
     box-sizing: border-box;
     width: 100%;
     padding: 15px 0;
