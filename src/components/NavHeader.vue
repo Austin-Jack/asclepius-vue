@@ -18,7 +18,7 @@
           <a href="javascript:;" class="items">中文版</a>
           <a href="javascript:;" class="items">EN</a>
           <a href="javascript:;" class="items">旧版网站</a>
-          <a href="javascript:;">员工通道</a>
+          <a href="/#/userCenter">用户中心</a>
           <a href="javascript:;"><span class="item"></span></a>
         </div>
       </div>

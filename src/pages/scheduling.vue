@@ -9,7 +9,7 @@
                 <a href="javascript:;">{{item.name}}</a>
                 <div class="children">
                    <ul >
-                    <li @click="getTable" v-for = "(items,index) in item.data" :key = "index">{{items.name}}</li>
+                    <li @click="getTable(items.dId)"  v-for = "(items,index) in item.data" :key = "index">{{items.name}}</li>
                    </ul>
                 </div>
                 <div class="table-wrap" style="display: none;">
@@ -24,28 +24,16 @@
                       <td class="head">周六</td>
                       <td class="head">周日</td>
                     </tr>
-                    <tr>
+                    <tr v-for="(item,id) in Data" :key="id">
                       <th class="doc" rowspan="2">上午</th>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
+                      <td class="doc" rowspan="2" v-for = "(item,index) of AM" :key="index">{{item.am.join('\r')}}</td>
                     </tr>
                     <tr>
                       <td></td>
                     </tr>
                     <tr>
                       <th class="doc" rowspan="2">下午</th>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
-                      <td class="doc" rowspan="2"></td>
+                      <td class="doc" rowspan="2" v-for = "(item,index) of PM" :key="index">{{item.pm.join('\r')}}</td>
                     </tr>
                     <tr>
                       <td></td>
@@ -82,40 +70,66 @@ export default {
       return{
         roomList:[       
             {
-              c_id:'1',
               name:'内科',
               data:[
                 {
-                  p_id:'1',
+                  dId:'2',
                   name:'肾病内科',
                 },
                 {
-                  p_id:'2',
-                  name:'消化内科'
+                  dId:'3',
+                  name:'消化内科',
                 },
                 {
-                  p_id:'3',
-                  name:'风湿科'
+                  dId:'4',
+                  name:'风湿科',
                 }
                 ]
             }
           , 
               {
-                c_id:'2',
                 name:'外科',
                 data:[
                   {
-                    p_id:'3',
-                    name:'腿外科'
+                    dId:'5',
+                    name:'腿外科',
+                    data:[]
                   },
                   {
-                    p_id:'4',
-                    name:'手部外科'
+                    dId:'6',
+                    name:'手部外科',
+                    data:[]
                   }
                 ]
               }
           
-        ]
+        ],
+        Data:[
+          {
+            dId:'2',
+            name:'肾病内科',
+            data:[
+                {"am":["韩淑英", "叶鹏"]},
+                {"pm":["陈秀云", "尉坤"]},      		    
+                {"am":[""]},
+                {"pm":[""]},
+                {"am":["韩淑英", "叶鹏"]},
+                {"pm":[""]},
+                {"am":[""]},
+                {"pm":[""]},
+                {"am":[""]},
+                {"pm":[""]},
+                {"am":["韩淑英", "叶鹏"]},
+                {"pm":[""]},
+                {"am":[""]},
+                {"pm":[""]},
+            ]
+        }
+        ],
+        List_data:[],
+        AM:[],
+        PM:[],
+        Date:[]
       }
     },
     components:{
@@ -123,18 +137,80 @@ export default {
         NavFooter
     },
     mounted(){
-      
+      this.getDate()
     },
     methods:{
-      getTable(){
+      getTable(id){
           let tab = document.getElementsByClassName('table-wrap')
           tab[0].attributes[1].nodeValue = 'display : none'
           setTimeout(function(){
             tab[0].attributes[1].nodeValue = 'display : block'
           },1000)
+          this.List_data = []
+          this.getTableData(id)
       },
-    }
-}
+      getTableData(id){
+         for(let items of this.Data){
+          if(items.dId == id){
+          for(let item of items.data){       
+              this.List_data.push(item)
+          }
+          }
+         }
+
+        this.applyList(this.List_data)  
+      },
+      applyList(data){
+
+          this.AM = []
+          this.PM = []
+          this.getAm(data)
+          this.getPm(data)
+        },
+        getAm(data){
+          for(let i = 0; i < data.length; i = i + 2){
+            this.AM.push(data[i])
+        }
+        console.log(this.AM);
+       },
+        getPm(data){ 
+           for(let i = 1; i < data.length; i = i + 2){
+            this.PM.push(data[i])
+        }
+        },
+        getDate(){
+          let date = new Date();
+          let month = date.getMonth() + 1;
+          let dates = date.getDate()
+          let day = date.getDay()
+          var arr = [ "周日","周一","周二","周三","周四","周五","周六",];
+          let Fdate = ( month + "月" + dates + "日" + arr[day])
+          for(let i = 0; i < 7; i++){
+            // while(month == (1||3||5||7||8||10||12)){
+            //   if((dates + i) > 31){
+            //     let Fdate = ((month + 1) + "月" + ((dates + i)%31) + "日" + arr[(day + i) %7])
+            //     this.Date.push(Fdate)
+            //   }else{
+            //     let Fdate = ( month + "月" + ((dates + i)) + "日" + arr[(day + i) %7])
+            //     this.Date.push(Fdate)
+            //   }
+            // }
+            // while(month == (4||6||9||11)){
+            //   if((dates + i) > 30){
+            //     let Fdate = ((month + 1) + "月" + ((dates + i)%30) + "日" + arr[(day + i) %7])
+            //     this.Date.push(Fdate)
+            //   }else{
+            //     let Fdate = ( month + "月" + ((dates + i)) + "日" + arr[(day + i) %7])
+            //     this.Date.push(Fdate)
+            //   }
+            // }
+          }
+          console.log(Fdate);
+       }
+      }
+      
+      }
+    
 </script>
 
 <style lang="scss">
@@ -221,6 +297,7 @@ export default {
                  background-size: cover;
                  .table-main{
                    width: 100%;
+                   font-size:16px;
                    td{
                     width: 12.5%;
                     border: 1px black solid;
@@ -267,7 +344,7 @@ export default {
              li{
                display: list-item;
                float: left;
-               width: 400px;
+               width: 33%;
                font-size: 18px;
                text-align: center;
                border:1px solid rgb(238, 238, 238);
