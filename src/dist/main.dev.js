@@ -16,7 +16,7 @@ require("element-ui/lib/theme-chalk/index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var mock = false;
+var mock = true;
 
 if (mock) {
   require('./mock/api');
