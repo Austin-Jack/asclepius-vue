@@ -8,7 +8,7 @@
                <li class="menu-item" v-for= "(item,index) in roomList" :key = "index">
                 <a href="javascript:;">{{item.name}}</a>
                 <div class="children">
-                   <ul >
+                   <ul>
                     <li @click="getTable(items.dId)"  v-for = "(items,index) in item.data" :key = "index">{{items.name}}</li>
                    </ul>
                 </div>
@@ -17,12 +17,6 @@
                     <tr class="head">
                       <th class="head">班次/周次</th>
                       <td class="head" v-for="(item,index) of Dates" :key="index">{{item}}</td>
-                      <!-- <td class="head">周二</td>
-                      <td class="head">周三</td>
-                      <td class="head">周四</td>
-                      <td class="head">周五</td>
-                      <td class="head">周六</td>
-                      <td class="head">周日</td> -->
                     </tr>
                     <tr>
                       <th class="doc" rowspan="2">上午</th>
@@ -68,8 +62,7 @@ export default {
     name:'sche',
     data(){
       return{
-        roomList:[           
-        ],
+        roomList:[],
         Data:[],
         List_data:[],
         AM:[],
@@ -93,6 +86,7 @@ export default {
       })
     },
     methods:{
+      //获取排班表格
       getTable(id){
           let tab = document.getElementsByClassName('table-wrap')
           tab[0].attributes[1].nodeValue = 'display : none'
@@ -113,24 +107,28 @@ export default {
 
         this.applyList(this.List_data)  
       },
+      //保存数据
       applyList(data){
 
           this.AM = []
           this.PM = []
           this.getAm(data)
           this.getPm(data)
-        },
-        getAm(data){
+      },
+      //获取上午值班医生
+      getAm(data){
           for(let i = 0; i < data.length; i = i + 2){
             this.AM.push(data[i])
         }
-       },
-        getPm(data){ 
+      },
+      //获取下午值班医生
+      getPm(data){ 
            for(let i = 1; i < data.length; i = i + 2){
             this.PM.push(data[i])
         }
-        },
-        getDate(){
+      },
+      //获取当前日期
+      getDate(){
           this.Date = []
           let date = new Date();
           let month = date.getMonth() + 1;
@@ -152,10 +150,13 @@ export default {
               }
             }
           }
-       }
+      },
+      //请求页面数据
+      // requestData(params){
+      //   this.axios.get()
+      // }
       } 
-      }
-    
+      } 
 </script>
 
 <style lang="scss">
