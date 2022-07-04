@@ -28,7 +28,13 @@
         <a href="/#/index" class="intro">首页</a>
         <a href="javascript:;" class="intro">医院概况</a>
         <a href="/#/scheduling" class="intro">门诊排班</a>
-        <a href="/#/appointment" class="intro">预约挂号</a>
+        <a href="javascript:;" class="intro in-menu"
+          > <div @click="showMenu">预约门诊</div>
+          <ul v-show="show" class="menu">
+            <li class="line"><a href="/#/appointment">普通门诊</a></li>
+            <li class="line"><a href="javascript:;">专家门诊</a></li>
+            <li><a href="javascript:;">国际门诊</a></li></ul
+        ></a>
         <a href="javascript:;" class="intro">科室导航</a>
         <a href="javascript:;" class="intro">学术交流</a>
       </div>
@@ -36,9 +42,24 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default{
+  data(){
+    return{
+      show:false
+    }
+  },
+  methods:{
+    showMenu(){
+      this.show = !this.show
+    }
+  }
+}
+</script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+@import '../assets/scss/config.scss';
+@import '../assets/scss/mixin.scss';
 .header {
   box-sizing: border-box;
   width: 100%;
@@ -124,6 +145,30 @@
       color: #000000;
       font-size: 17px;
       text-align: center;
+      .menu{
+        width: 205px;
+        position:absolute;
+        background-color: $colorG;
+        border: 1px solid $colorH;
+        top: 42px;
+        z-index: 100;
+      }
+    }
+    .in-menu{
+      position: relative;
+      &::after{
+        position: absolute;
+        right: 50px;
+        top:5px;
+        content: '';
+        @include bgImg(13px,15px, '../assets/imgs/arrow.png')
+      }
+      ul{
+        .line{
+        padding-bottom: 10px;
+      }
+      }
+      
     }
   }
 }
