@@ -7,8 +7,8 @@
         <div class="form_main">
           <el-card class="box-card">
             <div class="item">医院：林大医院</div>
-            <div class="item">科室：{{ appointForm.department }}</div>
-            <div class="item">医生：{{ appointForm.doctorName }}</div>
+            <div class="item">科室：{{ appointForm.dName }}</div>
+            <div class="item">医生：{{ appointForm.docName }}</div>
             <div class="item">
               <!-- 门诊类型：
               <el-radio-group v-model="appointForm.type">
@@ -22,7 +22,7 @@
             <div class="item">
               门诊时间：
               <el-select
-                v-model="appointForm.time"
+                v-model="appointForm.apTime"
                 placeholder="请选择就诊时间"
               >
                 <el-option
@@ -77,11 +77,11 @@ export default {
     return {
       // 预约信息
       appointForm: {
-        cid: null,
-        department: "普通内科",
-        doctorName: "吴晓波",
+        cId: null,
+        dName: "普通内科",
+        docName: "吴晓波",
         position: "主任医师",
-        time: "",
+        apTime: null,
         price: 30,
       },
       access_time: [],
@@ -103,7 +103,7 @@ export default {
       const res = await this.axios.post('/doctor/getSch',{docId:this.docId,scope:7})
       console.log(res)
       for (let it of res.data.data){
-        this.access_time.push(it.time)
+        this.access_time.push(it.apTime)
       }
     },
     // 获取就诊人信息
@@ -124,12 +124,13 @@ export default {
     },
     // 确认提交预约信息
     confirmAppoint(){
-      if(this.appointForm.cId === null || this.appointForm.time === ""){
+      if(this.appointForm.cId === null || this.appointForm.apTime === ""){
         // 提示错误
         this.$message.error('请填写完整！')
       }else {
         // 请求获取就诊记录单
-
+        //...此处待写
+        this.$router.push()
       }
     }
   },

@@ -59,12 +59,13 @@ Mock.mock("/api/roomList", {
   ],
 });
 // 获取科室列表
-Mock.mock("/api/department/showAll", [
+Mock.mock(RegExp("/api/department/showAllByLevel/0"), 
+[
   {
     cliName: "全科医学科",
     departments: [
       {
-        dId: "1",
+        dId: 1,
         name: "全科医学科门诊",
       },
     ],
@@ -73,43 +74,43 @@ Mock.mock("/api/department/showAll", [
     cliName: "内科",
     departments: [
       {
-        dId: "2",
+        dId: 2,
         name: "肾病内科",
       },
       {
-        dId: "3",
+        dId: 3,
         name: "风湿科",
       },
       {
-        dId: "4",
+        dId: 4,
         name: "感染病科",
       },
       {
-        dId: "5",
+        dId: 5,
         name: "感染控制中心",
       },
       {
-        dId: "6",
+        dId: 6,
         name: "呼吸内科",
       },
       {
-        dId: "7",
+        dId: 7,
         name: "内分泌科",
       },
       {
-        dId: "8",
+        dId: 8,
         name: "神经内科",
       },
       {
-        dId: "9",
+        dId: 9,
         name: "消化内科",
       },
       {
-        dId: "10",
+        dId: 10,
         name: "心血管内科",
       },
       {
-        dId: "11",
+        dId: 11,
         name: "血液科",
       },
     ],
@@ -118,47 +119,47 @@ Mock.mock("/api/department/showAll", [
     cliName: "外科",
     departments: [
       {
-        dId: "12",
+        dId: 12,
         name: "骨科",
       },
       {
-        dId: "13",
+        dId: 13,
         name: "脊柱外科",
       },
       {
-        dId: "14",
+        dId: 14,
         name: "心脏大血管外科",
       },
       {
-        dId: "15",
+        dId: 15,
         name: "胸外科",
       },
       {
-        dId: "16",
+        dId: 16,
         name: "肝胆肠中心",
       },
       {
-        dId: "17",
+        dId: 17,
         name: "泌尿外科",
       },
       {
-        dId: "18",
+        dId: 18,
         name: "普通外科",
       },
       {
-        dId: "19",
+        dId: 19,
         name: "器官移植中心",
       },
       {
-        dId: "20",
+        dId: 20,
         name: "烧伤重建外科",
       },
       {
-        dId: "21",
+        dId: 21,
         name: "神经外科",
       },
       {
-        dId: "22",
+        dId: 22,
         name: "整形美容科",
       },
     ],
@@ -167,7 +168,7 @@ Mock.mock("/api/department/showAll", [
     cliName: "专家门诊",
     departments: [
       {
-        dId: "23",
+        dId: 23,
         name: "专家门诊",
       },
     ],
@@ -176,7 +177,7 @@ Mock.mock("/api/department/showAll", [
     cliName: "耳鼻咽喉头颈外科",
     departments: [
       {
-        dId: "24",
+        dId: 24,
         name: "耳鼻咽喉科",
       },
     ],
@@ -185,15 +186,15 @@ Mock.mock("/api/department/showAll", [
     cliName: "妇产科",
     departments: [
       {
-        dId: "25",
+        dId: 25,
         name: "产科",
       },
       {
-        dId: "26",
+        dId: 26,
         name: "妇科",
       },
       {
-        dId: "27",
+        dId: 27,
         name: "生殖医学中心",
       },
     ],
@@ -202,7 +203,7 @@ Mock.mock("/api/department/showAll", [
     cliName: "儿科",
     departments: [
       {
-        dId: "28",
+        dId: 28,
         name: "儿科",
       },
     ],
@@ -211,7 +212,7 @@ Mock.mock("/api/department/showAll", [
     cliName: "眼科",
     departments: [
       {
-        dId: "29",
+        dId: 29,
         name: "眼科",
       },
     ],
@@ -220,7 +221,7 @@ Mock.mock("/api/department/showAll", [
     cliName: "口腔科",
     departments: [
       {
-        dId: "30",
+        dId: 30,
         name: "口腔医学中心",
       },
     ],
@@ -229,7 +230,97 @@ Mock.mock("/api/department/showAll", [
     cliName: "皮肤性病科",
     departments: [
       {
-        dId: "31",
+        dId: 31,
+        name: "皮肤科",
+      },
+    ],
+  },
+]);
+
+Mock.mock(RegExp("/api/department/showAllByLevel/1"), 
+[
+  {
+    cliName: "内科",
+    departments: [
+      {
+        dId: 2,
+        name: "肾病内科",
+      },
+      {
+        dId: 3,
+        name: "风湿科",
+      },
+      {
+        dId: 4,
+        name: "感染病科",
+      },
+      {
+        dId: 5,
+        name: "感染控制中心",
+      },
+      {
+        dId: 6,
+        name: "呼吸内科",
+      }
+    ],
+  },
+  {
+    cliName: "外科",
+    departments: [
+      {
+        dId: 12,
+        name: "骨科",
+      },
+      {
+        dId: 13,
+        name: "脊柱外科",
+      },
+      {
+        dId: 14,
+        name: "心脏大血管外科",
+      },
+      {
+        dId: 15,
+        name: "胸外科",
+      },
+      {
+        dId: 16,
+        name: "肝胆肠中心",
+      }
+    ],
+  },
+  {
+    cliName: "儿科",
+    departments: [
+      {
+        dId: 28,
+        name: "儿科",
+      },
+    ],
+  },
+  {
+    cliName: "眼科",
+    departments: [
+      {
+        dId: 29,
+        name: "眼科",
+      },
+    ],
+  },
+  {
+    cliName: "口腔科",
+    departments: [
+      {
+        dId: 30,
+        name: "口腔医学中心",
+      },
+    ],
+  },
+  {
+    cliName: "皮肤性病科",
+    departments: [
+      {
+        dId: 31,
         name: "皮肤科",
       },
     ],
