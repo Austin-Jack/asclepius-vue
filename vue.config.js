@@ -10,7 +10,7 @@ module.exports = {
             '/api':'/api'
           }
         }
-      }
+      },
     },
     productionSourceMap:false,
     chainWebpack:(config)=>{
