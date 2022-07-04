@@ -31,9 +31,9 @@
         <a href="javascript:;" class="intro in-menu"
           > <div @click="showMenu">预约门诊</div>
           <ul v-show="show" class="menu">
-            <li class="line"><a href="/#/appointment">普通门诊</a></li>
-            <li class="line"><a href="javascript:;">专家门诊</a></li>
-            <li><a href="javascript:;">国际门诊</a></li></ul
+            <li class="line"><a href="/#/appointment/0" @click="sendLevel(0)">普通门诊</a></li>
+            <li class="line"><a href="/#/appointment/1" @click="sendLevel(1)">专家门诊</a></li>
+            <li><a href="/#/appointment/2" @click="sendLevel(2)">国际门诊</a></li></ul
         ></a>
         <a href="javascript:;" class="intro">科室导航</a>
         <a href="javascript:;" class="intro">学术交流</a>
@@ -52,6 +52,9 @@ export default{
   methods:{
     showMenu(){
       this.show = !this.show
+    },
+    sendLevel(level){
+      this.$emit('sendLevel',level)
     }
   }
 }
@@ -169,6 +172,11 @@ export default{
       }
       }
       
+    }
+    .appoinment {
+      &:hover {
+        
+      }
     }
   }
 }

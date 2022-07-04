@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-header></nav-header>
+    <nav-header @sendLevel="getLevel"></nav-header>
     <div class="wrap">
       <div class="department">
         <el-menu
@@ -30,6 +30,7 @@
       </div>
       <div class="main">
         <div class="doctor">
+          <div class="massage" v-if="msgShow">请选择科室~</div>
           <div class="doctor_item" v-for="item in doctorList" :key="item.docId" >
             <img :src="item.docImage" class="photo" />
             <div class="introduction">
@@ -84,17 +85,22 @@ import NavFooter from "../components/NavFooter.vue";
 export default {
   data() {
     return {
+
       doctorRank:["主任医师","副主任医师","普通医师"],
       // 医生列表
       doctorList: [],
       // 科室列表
       departments: [],
+      // 门诊等级
+      level:0,
       dialogFormVisible: false,
       // 验证码
       verificationCode: null,
       uid: null,
       // 验证码错误控制键
       showError: false,
+      // 占位massage控制键
+      msgShow: true,
       // 选择的医生id
       docId:null
     };
@@ -104,33 +110,52 @@ export default {
     NavFooter,
   },
   created() {
+    // ...此处获取level（待完成）
+    // this.getLevel()
     // 获取科室列表
     this.getdepartment();
-    this.getDoctors()
   },
   methods: {
+    // 获取门诊等级
+    getLevel(level){
+      this.level = level
+      console.log(this.level,level)
+      this.getdepartment()
+    },
     // 获取科室列表
     async getdepartment() {
-      const res = await this.axios.get("/department/showAll");
+      // const res = await this.axios.get("/department/showAll");
+      const res = await this.axios.get(`/department/showAllByLevel/${this.level}`)
       console.log(res);
       this.departments = res.data;
     },
     async getDoctors(dId){
+      this.msgShow = false
       const res = await this.axios.get(`/doctor/${dId}`);
-      // const res = await this.axios.get(`/doctor/2`)
       console.log(res)
       this.doctorList = res.data;
     },
     // 获取token验证
-    getToken(docId) {
+    async getToken(docId) {
       // ...此处为获取token
       const token = window.localStorage.getItem("token");
       console.log(token);
       if (token === null) {
         this.dialogFormVisible = true;
       } else {
-        this.docId = docId
-        this.$router.push("/detail");
+        // 请求token是否有效
+        const res = await this.axios.get(`/login/validity/${token}`);
+        if (res.data.code === 200){
+          // 有效则跳转
+          this.docId = docId
+          this.$router.push({
+          path: `/detail/${this.docId}`,
+        })
+        }else{
+          // 无效则弹窗重新验证
+          this.dialogFormVisible = true;
+        }
+        
       }
     },
     async gotoRegister() {
@@ -179,6 +204,14 @@ html {
         align-content: flex-start;
         flex-wrap: wrap;
         padding-top: 20px;
+        .massage {
+          position: absolute;
+          top: 530px;
+          left: 830px;
+          color: #9e8660;
+          font-size: 40px;
+          font-weight: bold;
+        }
         .doctor_item {
           position: relative;
           margin: 10px 15px;
