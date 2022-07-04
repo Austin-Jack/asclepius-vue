@@ -38,7 +38,8 @@ const router = new Router({
             component: Appointment,
         },
         {
-            path:'/detail',
+            path:'/detail/:docId',
+            name:'detail',
             component:AppointDetail
         },
         {   

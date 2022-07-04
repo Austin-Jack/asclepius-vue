@@ -39,7 +39,7 @@
                 size="mini"
                 type="primary"
                 icon="el-icon-edit-outline "
-                @click="getToken"
+                @click="getToken(item.docId)"
                 >挂号</el-button
               >
             </div>
@@ -85,13 +85,18 @@ export default {
   data() {
     return {
       doctorRank:["主任医师","副主任医师","普通医师"],
+      // 医生列表
       doctorList: [],
       // 科室列表
       departments: [],
       dialogFormVisible: false,
+      // 验证码
       verificationCode: null,
       uid: null,
+      // 验证码错误控制键
       showError: false,
+      // 选择的医生id
+      docId:null
     };
   },
   components: {
@@ -117,13 +122,14 @@ export default {
       this.doctorList = res.data;
     },
     // 获取token验证
-    getToken() {
+    getToken(docId) {
       // ...此处为获取token
       const token = window.localStorage.getItem("token");
       console.log(token);
       if (token === null) {
         this.dialogFormVisible = true;
       } else {
+        this.docId = docId
         this.$router.push("/detail");
       }
     },
@@ -142,7 +148,9 @@ export default {
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE1MTI1NDQyOTksImV4cCI6MTUxMjYzMDY5OX0.eGrsrvwHm-tPsO9r_pxHIQ5i5L1kX9RX444uwnRGaIM"
         );
         this.dialogFormVisible = false;
-        this.$router.push("/detail");
+        this.$router.push({
+          path: `/detail/${this.docId}`,
+        });
       }
     },
   },

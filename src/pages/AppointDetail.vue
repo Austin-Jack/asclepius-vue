@@ -6,7 +6,7 @@
         <div class="title">提交挂号信息</div>
         <div class="form_main">
           <el-card class="box-card">
-            <div class="item">医院：{{ appointForm.hospital }}</div>
+            <div class="item">医院：林大医院</div>
             <div class="item">科室：{{ appointForm.department }}</div>
             <div class="item">医生：{{ appointForm.doctorName }}</div>
             <div class="item">
@@ -28,7 +28,7 @@
                 <el-option
                   v-for="(item, index) in access_time"
                   :key="index"
-                  :label="item"
+                  :label="item | formatTime"
                   :value="item"
                 ></el-option>
               </el-select>
@@ -77,37 +77,39 @@ export default {
     return {
       // 预约信息
       appointForm: {
-        hospital: "林大医院",
+        cid: null,
         department: "普通内科",
         doctorName: "吴晓波",
         position: "主任医师",
         time: "",
         price: 30,
-        cid: null,
       },
-      access_time: [
-        "2022-6-29 周三 8:00-9:00",
-        "2022-6-30 周四 8:00-9:00",
-        "2022-6-30 周四 8:00-9:00",
-        "2022-6-30 周四 8:00-9:00",
-        "2022-6-30 周四 8:00-9:00",
-        "2022-6-30 周四 8:00-9:00",
-        "2022-6-30 周四 8:00-9:00",
-        "2022-6-30 周四 8:00-9:00",
-      ],
+      access_time: [],
       // 就诊人信息
       ofPatient: [],
       dialogVisible:false
     };
   },
   created(){
+    // 静态测试！！
+    // this.docId = this.$route.params.docId
+    this.docId = 2
     this.getPatients()
+    this.getSingleSchedul()
   },
   methods: {
+    // 获取该医生排班
+    async getSingleSchedul(){
+      const res = await this.axios.post('/doctor/getSch',{docId:this.docId,scope:7})
+      console.log(res)
+      for (let it of res.data.data){
+        this.access_time.push(it.time)
+      }
+    },
     // 获取就诊人信息
     async getPatients(){
       const uid = window.localStorage.getItem("uid")
-      const res = await this.axios.get("/user/getCards",{uId:uid})
+      const res = await this.axios.get("/private/user/getCards",{uId:uid})
       this.ofPatient = res.data
     },
     // 打开添加就诊人弹窗
@@ -120,10 +122,14 @@ export default {
       // 更新就诊人信息
       this.getPatients()
     },
-    // 就诊时间或就诊人未填写时提示错误
+    // 确认提交预约信息
     confirmAppoint(){
-      if(this.appointForm.cid === null || this.appointForm.time === ""){
+      if(this.appointForm.cId === null || this.appointForm.time === ""){
+        // 提示错误
         this.$message.error('请填写完整！')
+      }else {
+        // 请求获取就诊记录单
+
       }
     }
   },
