@@ -97,6 +97,8 @@ export default {
       // 验证码
       verificationCode: null,
       uid: null,
+      // 选择的科室id
+      dId:null,
       // 验证码错误控制键
       showError: false,
       // 占位massage控制键
@@ -131,6 +133,7 @@ export default {
     },
     async getDoctors(dId){
       this.msgShow = false
+      this.dId = dId
       const res = await this.axios.get(`/doctor/${dId}`);
       console.log(res)
       this.doctorList = res.data;
@@ -149,7 +152,7 @@ export default {
           // 有效则跳转
           this.docId = docId
           this.$router.push({
-          path: `/detail/${this.docId}`,
+          path: `/detail/${this.dId}/${this.docId}`,
         })
         }else{
           // 无效则弹窗重新验证
@@ -174,7 +177,7 @@ export default {
         );
         this.dialogFormVisible = false;
         this.$router.push({
-          path: `/detail/${this.docId}`,
+          path: `/detail/${this.dId}/${this.docId}`,
         });
       }
     },
