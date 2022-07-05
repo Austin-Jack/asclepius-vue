@@ -93,7 +93,7 @@ export default {
   methods: {
     // 获取该医生信息及排班
     async getSingleSchedul(){
-      const res = await this.axios.post('/doctor/getSch',{docId:this.docId,dId:this.dId})
+      const res = await this.axios.get(`/schedule/doctor/${this.dId}/${this.docId}`,)
       console.log(res)
       this.doctorDetail = res.data.data
     },
