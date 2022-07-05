@@ -59,8 +59,7 @@ Mock.mock("/api/roomList", {
   ],
 });
 // 获取科室列表
-Mock.mock(RegExp("/api/department/showAllByLevel/0"), 
-[
+Mock.mock(RegExp("/api/department/showAllByLevel/0"), [
   {
     cliName: "全科医学科",
     departments: [
@@ -237,8 +236,7 @@ Mock.mock(RegExp("/api/department/showAllByLevel/0"),
   },
 ]);
 
-Mock.mock(RegExp("/api/department/showAllByLevel/1"), 
-[
+Mock.mock(RegExp("/api/department/showAllByLevel/1"), [
   {
     cliName: "内科",
     departments: [
@@ -261,7 +259,7 @@ Mock.mock(RegExp("/api/department/showAllByLevel/1"),
       {
         dId: 6,
         name: "呼吸内科",
-      }
+      },
     ],
   },
   {
@@ -286,7 +284,7 @@ Mock.mock(RegExp("/api/department/showAllByLevel/1"),
       {
         dId: 16,
         name: "肝胆肠中心",
-      }
+      },
     ],
   },
   {
@@ -453,20 +451,26 @@ Mock.mock("/api/private/user/addCard", "post", (options) => {
   };
 });
 
-Mock.mock("/api/doctor/getSch", "post", (options) => {
-  console.log(options.body);
+Mock.mock("/api/doctor/getSch", "post", () => {
   return {
     code: 200,
     message: "",
-    data: [
-      {
-        sId: 11,
-        time: 1656743987310,
-      },
-      {
-        sId: 14,
-        time: 1656835932000,
-      },
-    ],
+    data: {
+      dName: "内科",
+      cLevel: 0,
+      docName: "刘德华",
+      docRank: 0,
+      apCost: 30,
+      times: [
+        {
+          sId: 11,
+          time: 1658557800000,
+        },
+        {
+          sId: 14,
+          time: 1658557800000,
+        },
+      ],
+    },
   };
 });

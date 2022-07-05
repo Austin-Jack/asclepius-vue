@@ -7,37 +7,31 @@
         <div class="form_main">
           <el-card class="box-card">
             <div class="item">医院：林大医院</div>
-            <div class="item">科室：{{ appointForm.dName }}</div>
-            <div class="item">医生：{{ appointForm.docName }}</div>
+            <div class="item">科室：{{ doctorDetail.dName }}</div>
+            <div class="item">医生：{{ doctorDetail.docName }}</div>
             <div class="item">
-              <!-- 门诊类型：
-              <el-radio-group v-model="appointForm.type">
-                <el-radio :label="0">普通门诊</el-radio>
-                <el-radio :label="1">专家门诊</el-radio>
-                <el-radio :label="2">国际门诊</el-radio>
-              </el-radio-group> -->
               医生职称：
-              {{ appointForm.position }}
+              {{ doctorRank[doctorDetail.docRank]}}
             </div>
             <div class="item">
               门诊时间：
               <el-select
-                v-model="appointForm.apTime"
+                v-model="sId"
                 placeholder="请选择就诊时间"
               >
                 <el-option
-                  v-for="(item, index) in access_time"
-                  :key="index"
-                  :label="item | formatTime"
-                  :value="item"
+                  v-for="item in doctorDetail.times"
+                  :key="item.sId"
+                  :label="item.time | formatTime"
+                  :value="item.sId"
                 ></el-option>
               </el-select>
             </div>
-            <div class="item">费用：￥{{ appointForm.price }}</div>
+            <div class="item">费用：￥{{ doctorDetail.apCost }}</div>
             <el-divider content-position="center"
               ><span style="color: #6375b7">选择就诊人</span></el-divider
             >
-            <el-select v-model="appointForm.cId" placeholder="请选择就诊人">
+            <el-select v-model="cId" placeholder="请选择就诊人">
               <el-option
                 v-for="p in ofPatient"
                 :key="p.cId"
@@ -75,15 +69,12 @@ import PatientCard from '../components/PatientCard.vue'
 export default {
   data() {
     return {
+      doctorRank:["主任医师","副主任医师","普通医师"],
       // 预约信息
-      appointForm: {
-        cId: null,
-        dName: "普通内科",
-        docName: "吴晓波",
-        position: "主任医师",
-        apTime: null,
-        price: 30,
-      },
+      cId: null,
+      sId: null,
+      // 医生及排班信息
+      doctorDetail:null,
       access_time: [],
       // 就诊人信息
       ofPatient: [],
@@ -92,19 +83,19 @@ export default {
   },
   created(){
     // 静态测试！！
+    // this.dId = this.$route.params.dId
     // this.docId = this.$route.params.docId
+    this.dId = 2
     this.docId = 2
     this.getPatients()
     this.getSingleSchedul()
   },
   methods: {
-    // 获取该医生排班
+    // 获取该医生信息及排班
     async getSingleSchedul(){
-      const res = await this.axios.post('/doctor/getSch',{docId:this.docId,scope:7})
+      const res = await this.axios.post('/doctor/getSch',{docId:this.docId,dId:this.dId})
       console.log(res)
-      for (let it of res.data.data){
-        this.access_time.push(it.apTime)
-      }
+      this.doctorDetail = res.data.data
     },
     // 获取就诊人信息
     async getPatients(){
@@ -124,7 +115,7 @@ export default {
     },
     // 确认提交预约信息
     confirmAppoint(){
-      if(this.appointForm.cId === null || this.appointForm.apTime === ""){
+      if(this.cId === null || this.sId === null){
         // 提示错误
         this.$message.error('请填写完整！')
       }else {

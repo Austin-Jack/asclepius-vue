@@ -38,7 +38,7 @@ const router = new Router({
             component: Appointment,
         },
         {
-            path:'/detail/:docId',
+            path:'/detail/:dId/:docId',
             name:'detail',
             component:AppointDetail
         },
