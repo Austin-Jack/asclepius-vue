@@ -142,21 +142,6 @@ export default{
     width: 100%;
     height: 60px;
     background-color: #ffffff;
-    .intro {
-      flex: 1;
-      display: inline-block;
-      color: #000000;
-      font-size: 17px;
-      text-align: center;
-      .menu{
-        width: 205px;
-        position:absolute;
-        background-color: $colorG;
-        border: 1px solid $colorH;
-        top: 42px;
-        z-index: 100;
-      }
-    }
     .in-menu{
       position: relative;
       &::after{
@@ -166,6 +151,29 @@ export default{
         content: '';
         @include bgImg(13px,15px, '../assets/imgs/arrow.png')
       }
+      .menu{
+        width: 205px;
+        height: 0;
+        opacity: 0;
+        position:absolute;
+        background-color: $colorG;
+        border: 1px solid $colorH;
+        top: 42px;
+        overflow: hidden;
+        z-index: 100;
+        transition: all 0.5s;
+      }
+      &:hover{
+        color: $colorA;
+        .menu{
+          height: 100px;
+          opacity: 1;
+          color: black;
+          li:hover{
+            color: $colorA;
+          }
+        }
+      }
       ul{
         .line{
         padding-bottom: 10px;
@@ -173,11 +181,18 @@ export default{
       }
       
     }
-    .appoinment {
-      &:hover {
-        
+    .intro {
+      flex: 1;
+      display: inline-block;
+      color: #000000;
+      font-size: 17px;
+      text-align: center;
+      &:hover{
+        color: $colorA;
       }
+      
     }
+    
   }
 }
 </style>

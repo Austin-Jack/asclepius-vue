@@ -1,0 +1,37 @@
+{
+  "id": "3499501",
+  "name": "hospital",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2696594",
+      "name": "就诊卡",
+      "font_class": "jiuzhenqia",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "9874552",
+      "name": "KHCFDC_用户中心",
+      "font_class": "yonghuzhongxin",
+      "unicode": "e6e3",
+      "unicode_decimal": 59107
+    },
+    {
+      "icon_id": "10268639",
+      "name": "预约挂号",
+      "font_class": "yuyueguahao",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "17605490",
+      "name": "药丸",
+      "font_class": "yaowan",
+      "unicode": "e818",
+      "unicode_decimal": 59416
+    }
+  ]
+}
