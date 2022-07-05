@@ -28,13 +28,13 @@
         <a href="/#/index" class="intro">首页</a>
         <a href="javascript:;" class="intro">医院概况</a>
         <a href="/#/scheduling" class="intro">门诊排班</a>
-        <a href="javascript:;" class="intro in-menu"
-          > <div @click="showMenu">预约门诊</div>
-          <ul v-show="show" class="menu">
-            <li class="line"><a href="/#/appointment/0" @click="sendLevel(0)">普通门诊</a></li>
-            <li class="line"><a href="/#/appointment/1" @click="sendLevel(1)">专家门诊</a></li>
-            <li><a href="/#/appointment/2" @click="sendLevel(2)">国际门诊</a></li></ul
-        ></a>
+        <div class="intro in-menu"> 
+          <div>预约门诊</div>
+          <ul class="menu">
+            <li class="level line"><a href="/#/appointment/0" @click="sendLevel(0)">普通门诊</a></li>
+            <li class="level line"><a href="/#/appointment/1" @click="sendLevel(1)">专家门诊</a></li>
+            <li class="level"><a href="/#/appointment/2" @click="sendLevel(2)">国际门诊</a></li></ul
+        ></div>
         <a href="javascript:;" class="intro">科室导航</a>
         <a href="javascript:;" class="intro">学术交流</a>
       </div>
@@ -46,13 +46,9 @@
 export default{
   data(){
     return{
-      show:false
     }
   },
   methods:{
-    showMenu(){
-      this.show = !this.show
-    },
     sendLevel(level){
       this.$emit('sendLevel',level)
     }
