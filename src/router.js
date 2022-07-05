@@ -4,10 +4,9 @@ import Index from './pages/index'
 import Appointment from './pages/appointment'
 import Scheduling from './pages/scheduling'
 import AppointDetail from './pages/AppointDetail'
-import Authentication from './pages/authentication'
 import Home from './pages/home'
 import UserCenter from './pages/userCenter'
-
+import Introduction from './pages/introduction'
 
 Vue.use(Router)
 
@@ -48,12 +47,12 @@ const router = new Router({
             component: Scheduling
         },
         {
-            path:'/authentication',
-            component: Authentication
-        },
-        {
             path:'/userCenter',
             component: UserCenter
+        },
+        {
+            path:'/introduction',
+            component:Introduction
         }
 
     ]
