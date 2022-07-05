@@ -451,7 +451,7 @@ Mock.mock("/api/private/user/addCard", "post", (options) => {
   };
 });
 
-Mock.mock("/api/doctor/getSch", "post", () => {
+Mock.mock("/api/schedule/doctor/2/2", "get", () => {
   return {
     code: 200,
     message: "",
