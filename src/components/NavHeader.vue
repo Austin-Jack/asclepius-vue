@@ -158,15 +158,19 @@ export default{
         overflow: hidden;
         z-index: 100;
         transition: all 0.5s;
+        a{
+          color: black;
+        }
       }
       &:hover{
         color: $colorA;
         .menu{
           height: 100px;
           opacity: 1;
-          color: black;
           li:hover{
-            color: $colorA;
+            a{
+              color: $colorA;
+            }    
           }
         }
       }

@@ -11,21 +11,13 @@ var _vueRouter = _interopRequireDefault(require("vue-router"));
 
 var _index = _interopRequireDefault(require("./pages/index"));
 
-var _appointment = _interopRequireDefault(require("./pages/appointment"));
-
-var _scheduling = _interopRequireDefault(require("./pages/scheduling"));
-
-var _AppointDetail = _interopRequireDefault(require("./pages/AppointDetail"));
-
-var _home = _interopRequireDefault(require("./pages/home"));
-
-var _userCenter = _interopRequireDefault(require("./pages/userCenter"));
-
-var _introduction = _interopRequireDefault(require("./pages/introduction"));
-
-var _history = _interopRequireDefault(require("./pages/history"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 _vue["default"].use(_vueRouter["default"]);
 
@@ -43,28 +35,56 @@ var router = new _vueRouter["default"]({
   }, {
     path: '/home',
     name: 'home',
-    component: _home["default"]
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/home.vue'));
+      });
+    }
   }, {
     path: '/appointment/:level',
     name: 'appointment',
-    component: _appointment["default"]
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/appointment.vue'));
+      });
+    }
   }, {
     path: '/detail/:dId/:docId',
     name: 'detail',
-    component: _AppointDetail["default"]
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/AppointDetail.vue'));
+      });
+    }
   }, {
     path: '/scheduling',
     name: 'scheduling',
-    component: _scheduling["default"]
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/scheduling.vue'));
+      });
+    }
   }, {
     path: '/userCenter',
-    component: _userCenter["default"]
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/userCenter.vue'));
+      });
+    }
   }, {
     path: '/introduction',
-    component: _introduction["default"]
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/introduction.vue'));
+      });
+    }
   }, {
     path: '/history',
-    component: _history["default"]
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/history.vue'));
+      });
+    }
   }]
 }); // router.beforeEach((to,from,next)=>{
 //      if(to.path === '/userCenter'){

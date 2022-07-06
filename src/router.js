@@ -1,13 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from './pages/index'
-import Appointment from './pages/appointment'
-import Scheduling from './pages/scheduling'
-import AppointDetail from './pages/AppointDetail'
-import Home from './pages/home'
-import UserCenter from './pages/userCenter'
-import Introduction from './pages/introduction'
-import History from './pages/history'
 Vue.use(Router)
 
 const router = new Router({
@@ -29,34 +22,34 @@ const router = new Router({
         {
            path:'/home',
            name:'home',
-           component:Home
+           component: () => import('./pages/home.vue') 
         },
         {   
             path:'/appointment/:level' ,
             name:'appointment',
-            component: Appointment,
+            component: () => import('./pages/appointment.vue') 
         },
         {
             path:'/detail/:dId/:docId',
             name:'detail',
-            component:AppointDetail
+            component:() => import('./pages/AppointDetail.vue')
         },
         {   
             path:'/scheduling' ,
             name:'scheduling',
-            component: Scheduling
+            component: () => import('./pages/scheduling.vue')
         },
         {
             path:'/userCenter',
-            component: UserCenter
+            component: () => import('./pages/userCenter.vue')
         },
         {
             path:'/introduction',
-            component:Introduction
+            component:() => import('./pages/introduction.vue')
         },
         {
             path:'/history',
-            component: History
+            component: () => import('./pages/history.vue')
         }
 
     ]
