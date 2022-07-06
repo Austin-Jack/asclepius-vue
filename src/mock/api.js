@@ -474,3 +474,23 @@ Mock.mock("/api/schedule/doctor/2/2", "get", () => {
     },
   };
 });
+
+//获取预约信息
+Mock.mock("/api/private/user/getAppoints","get",[
+  {  
+    "cId":'123',
+    "cName":"章三",
+    "dName":"肾病内科",
+    "apTime":"12点",
+    "docName":"刘鹏举",
+    "apCost":"30"
+  },
+  {
+    "cId":'1223',
+    "cName":"zhang三",
+    "dName":"肾病内科",
+    "apTime":"12点",
+    "docName":"刘鹏举",
+    "apCost":"30"
+  },
+]);

@@ -17,11 +17,13 @@ var _scheduling = _interopRequireDefault(require("./pages/scheduling"));
 
 var _AppointDetail = _interopRequireDefault(require("./pages/AppointDetail"));
 
-var _authentication = _interopRequireDefault(require("./pages/authentication"));
-
 var _home = _interopRequireDefault(require("./pages/home"));
 
 var _userCenter = _interopRequireDefault(require("./pages/userCenter"));
+
+var _introduction = _interopRequireDefault(require("./pages/introduction"));
+
+var _history = _interopRequireDefault(require("./pages/history"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -43,22 +45,26 @@ var router = new _vueRouter["default"]({
     name: 'home',
     component: _home["default"]
   }, {
-    path: '/appointment',
+    path: '/appointment/:level',
     name: 'appointment',
     component: _appointment["default"]
   }, {
-    path: '/detail',
+    path: '/detail/:dId/:docId',
+    name: 'detail',
     component: _AppointDetail["default"]
   }, {
     path: '/scheduling',
     name: 'scheduling',
     component: _scheduling["default"]
   }, {
-    path: '/authentication',
-    component: _authentication["default"]
-  }, {
     path: '/userCenter',
     component: _userCenter["default"]
+  }, {
+    path: '/introduction',
+    component: _introduction["default"]
+  }, {
+    path: '/history',
+    component: _history["default"]
   }]
 }); // router.beforeEach((to,from,next)=>{
 //      if(to.path === '/userCenter'){
