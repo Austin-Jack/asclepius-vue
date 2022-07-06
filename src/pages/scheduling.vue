@@ -24,14 +24,12 @@
                       <td class="doc" rowspan="2" v-for = "(item,index) of AM" :key="index">{{item.am.join('\r')}}</td>
                     </tr>
                     <tr>
-                      <td></td>
                     </tr>
                     <tr>
                       <th class="doc" rowspan="2">下午</th>
                       <td class="doc" rowspan="2" v-for = "(item,index) of PM" :key="index">{{item.pm.join('\r')}}</td>
                     </tr>
                     <tr>
-                      <td></td>
                     </tr>
                 </table>
                 </div>
@@ -248,15 +246,17 @@ export default {
                     font-size:16px;
                     td{
                      width: 12.5%;
-                     border: 1px black solid;
-                     text-align: center;
-                    }
-                    th{
-                     width:12.5%;
-                     border-top:1px black solid;
                      border-right:1px black solid;
                      border-bottom:1px black solid;
                      text-align: center;
+                     padding: 0;
+                    }
+                    th{
+                     width:12.5%;
+                     border-right:1px black solid;
+                     border-bottom:1px black solid;
+                     text-align: center;
+                     padding: 0;
                     }
                     .doc{
                      height: 200px;
@@ -300,6 +300,7 @@ export default {
                a{
                  height: 50px;
                  line-height: 50px;
+                 color: black;
                }
              }
             }
