@@ -101,7 +101,7 @@ export default {
     async getPatients(){
       const uid = window.localStorage.getItem("uid")
       const res = await this.axios.get("/private/user/getCards",{uId:uid})
-      this.ofPatient = res.data
+      this.ofPatient = res.data.data
     },
     // 打开添加就诊人弹窗
     addCard() {
