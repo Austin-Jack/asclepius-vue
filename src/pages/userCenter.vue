@@ -36,8 +36,73 @@
         </div>
         <div class="head-logo">
         </div>
-        <div class="card" v-show="card"></div>
-        <div class="appoint" v-show="appoint"></div>
+        <div class="card" v-show="card">
+          <!-- <el-button class="add" type="success">添加就诊卡</el-button> -->
+          <div class="card-wrap">
+            <el-card class="box-card information" v-for="(item,index) in cardForm" :key="index">
+              <div slot="header" class="clearfix">
+             <span>就诊卡</span>
+             <el-button style="float: right; padding: 3px 0" type="danger" @click="open1">删除就诊卡</el-button>
+           </div>
+           <div class="text item">就诊卡号: {{item.cId}}</div>
+           <div class="text item">身份证号: {{item.identityID}}</div>
+           <div class="text item">就诊人姓名: {{item.name}}</div>
+           <div class="text item">就诊人性别: {{item.sex?'男':'女'}}</div>
+           <div class="text item">就诊人年龄: {{item.age}}</div>
+           <div class="text item">手机号: {{item.telNumber}}</div>
+         </el-card>
+         
+          </div>
+        </div>
+        <div class="appoint" v-show="appoint">
+           <div class="appoint-wrap">
+             <el-descriptions class="margin-top detail" title="预约信息" :column="3" :size="size" border 
+             v-for="item in appointForm" :key="item.cId">
+               <el-descriptions-item>
+                 <template slot="label">
+                   <i class="el-icon-user"></i>
+                   就诊人
+                 </template>
+                {{item.cName}}
+               </el-descriptions-item>
+               <el-descriptions-item>
+                 <template slot="label">
+                   <i class="el-icon-time"></i>
+                   预约时间
+                 </template>
+                 {{item.apTime}}
+               </el-descriptions-item>
+               <el-descriptions-item>
+                 <template slot="label">
+                   <i class="el-icon-user-solid"></i>
+                   医生名称
+                 </template>
+                 {{item.docName}}
+               </el-descriptions-item>
+               <el-descriptions-item>
+                 <template slot="label">
+                   <i class="el-icon-tickets"></i>
+                   科室名称
+                 </template>
+                 {{item.dName}}
+               </el-descriptions-item>
+               <el-descriptions-item>
+                 <template slot="label">
+                   <i class="el-icon-star-off"></i>
+                   挂号费
+                 </template>
+                 {{item.apCost}}
+               </el-descriptions-item>
+                <el-descriptions-item>
+                 <template slot="label">
+                   <i class="el-icon-warning"></i>
+                   操作
+                 </template>
+                 <el-button type="danger" size="small"  @click="open">取消预约</el-button>
+               </el-descriptions-item>
+             </el-descriptions>
+           </div>
+        </div>
         <div class="medcine" v-show="medcine"></div>
       </div>
     </div>
@@ -53,13 +118,27 @@ export default {
     return{
       card:true,
       appoint:false,
-      medcine:false
+      medcine:false,
+      cardForm:[  
+      ],
+      appointForm:[],
+      u_id:'',
+      size: ''
     }
   },
+  created(){
+     this.u_id = window.localStorage.getItem("uid")
+  },
+  mounted(){
+    this.getCard(this.u_id);
+    this.getAppoint()
+  },
   methods: {
+    //路由回退
      goBack(){
       this.$router.go(-1);
      },
+     //侧边栏操作
      show(id){
        if(id == 1){
         this.appoint = false
@@ -75,6 +154,61 @@ export default {
         this.medcine  = true
        }
      },
+     //获取就诊卡信息
+     getCard(id){
+       this.axios.get("/private/user/getCards",id).then((res) => {
+          this.cardForm = (res.data)
+       })
+     },
+     getAppoint(){
+        this.axios.get("/private/user/getAppoints").then((res) => {
+          this.appointForm = (res.data)
+       })
+     },
+     //删除就诊卡
+     deleteCard(){
+     },
+     //重新请求数据
+     renderData(){
+
+     },
+     //取消预约弹窗
+     open(){
+      this.$confirm('此操作将取消该预约, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '取消成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          });          
+        });
+     },
+     //删除就诊卡弹窗
+     open1(){
+      this.$confirm('此操作将删除该就诊卡, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.deleteCard()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          });          
+        });
+     }
   },
 };
 </script>
@@ -123,14 +257,43 @@ export default {
     .card{
       position: absolute;
       width: 100%;
-      height: 200px;
+      height: 848px;
       background-color:antiquewhite;
+      .add{
+        position: absolute;
+        top:0;
+        left: 5px;
+      }
+      .card-wrap{
+          padding-top: 20px;
+          display: flex;
+          .information{
+            display: inline-block;
+            width: 48%;
+            margin:0 20px;
+            margin-top: 20px;
+            line-height:40px;
+            font-size: 16px;
+            font-weight: 400;
+            border: 1px solid black;  
+          }
+          .cancle{
+            position: absolute;
+            top:55px;
+            right:5px;
+          }
+      }
     }
     .appoint{
       position: absolute;
       width: 100%;
-      height: 200px;
-      background-color: aquamarine;
+      height: 848px;
+      .appoint-wrap{
+        .detail{
+          border: 1px solid rgb(235, 238, 245);
+          margin-top:20px;
+        }
+      }
     }
     .medcine{
       position: absolute;
