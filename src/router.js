@@ -7,7 +7,7 @@ import AppointDetail from './pages/AppointDetail'
 import Home from './pages/home'
 import UserCenter from './pages/userCenter'
 import Introduction from './pages/introduction'
-
+import History from './pages/history'
 Vue.use(Router)
 
 const router = new Router({
@@ -53,6 +53,10 @@ const router = new Router({
         {
             path:'/introduction',
             component:Introduction
+        },
+        {
+            path:'/history',
+            component: History
         }
 
     ]
