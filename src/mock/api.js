@@ -59,7 +59,7 @@ Mock.mock("/api/roomList", {
   ],
 });
 // 获取科室列表
-Mock.mock(RegExp("/api/department/showAllByLevel/0"), [
+Mock.mock(RegExp("/api/department/showAllByLevel/0"), {data:[
   {
     cliName: "全科医学科",
     departments: [
@@ -234,9 +234,9 @@ Mock.mock(RegExp("/api/department/showAllByLevel/0"), [
       },
     ],
   },
-]);
+]});
 
-Mock.mock(RegExp("/api/department/showAllByLevel/1"), [
+Mock.mock(RegExp("/api/department/showAllByLevel/1"), {data:[
   {
     cliName: "内科",
     departments: [
@@ -323,10 +323,10 @@ Mock.mock(RegExp("/api/department/showAllByLevel/1"), [
       },
     ],
   },
-]);
+]});
 
 // 获取医生列表
-Mock.mock("/api/doctor/1", [
+Mock.mock("/api/doctor/1",{data: [
   {
     docId: "2",
     docName: "游鹏",
@@ -367,9 +367,10 @@ Mock.mock("/api/doctor/1", [
     docDetail:
       "孩子只是合作这些网上.在线电话安全那些国家.开始一样来源业务为了支持.   关系有限学习一般应该这种网络标准.全部研究原因企业不过不断.语言虽然但是没有.不会作品没有类别这种今天特别.最新内容有些北京服务.地址教育一起文章这些.制作手机只有感觉系列可是需要.简介是一都是文件.各种是一以及部门等级没有. 电话这个一种专业.个人增加联系全国一直阅读.技术名称组织作品.",
   },
-]);
+]
+});
 
-Mock.mock("/api/doctor/2", [
+Mock.mock("/api/doctor/2",{data:[
   {
     docId: "6",
     docName: "黄丽华",
@@ -410,10 +411,11 @@ Mock.mock("/api/doctor/2", [
     docDetail:
       "浏览出来人员基本最新.一起城市正在发生类别今年业务现在.帖子安全进入.简介一样部门发生详细.必须业务免费方面论坛.经营怎么积分专业广告免费.欢迎系列产品一直一样服务客户.查看这种一个完成帮助资源有限.更多进入已经你的感觉更新发表.就是基本软件能够研究应该解决这个.一直国家应用因此处理他的参加.这里国际中国类型可以价格.分析最大我的责任规定.用户评论能够可以觉得那个.",
   },
-]);
+]
+} );
 
 // 获取就诊人信息
-Mock.mock(RegExp("/api/private/user/getCards" + ".*"), [
+Mock.mock(RegExp("/api/private/user/getCards" + ".*"), {data:[
   {
     cId: 10001, //卡片id
     identityID: "451423194408201455", //身份证
@@ -430,7 +432,8 @@ Mock.mock(RegExp("/api/private/user/getCards" + ".*"), [
     name: "卢成", //姓名
     telNumber: "18101632437", //电话号码
   },
-]);
+]
+});
 
 // 添加就诊人
 Mock.mock("/api/private/user/addCard", "post", (options) => {

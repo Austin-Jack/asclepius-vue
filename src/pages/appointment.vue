@@ -129,14 +129,14 @@ export default {
       // const res = await this.axios.get("/department/showAll");
       const res = await this.axios.get(`/department/showAllByLevel/${this.level}`)
       console.log(res);
-      this.departments = res.data;
+      this.departments = res.data.data;
     },
     async getDoctors(dId){
       this.msgShow = false
       this.dId = dId
       const res = await this.axios.get(`/doctor/${dId}`);
       console.log(res)
-      this.doctorList = res.data;
+      this.doctorList = res.data.data;
     },
     // 获取token验证
     async getToken(docId) {
