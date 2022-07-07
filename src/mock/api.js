@@ -482,7 +482,9 @@ Mock.mock("/api/schedule/doctor/2/2", "get", () => {
 Mock.mock("/api/user/aplist","get",[
   {
     "apId":1000,		//预约号
-    "patient":"病人名字", 
+    "cId":1021,
+    "sId":10021,
+    "patient":"病人名字",
     "apTime":1657238400000,  //预约时间
     "docName":"", //医生名称
     "dName":"老年科", //科室名称
@@ -491,7 +493,9 @@ Mock.mock("/api/user/aplist","get",[
     "apStatus":3 //状态 0已创建,1已取消,2已过期(没有去而且时间到了),3已完成
 },
 {
-      "apId":1000,		
+      "apId":1000,
+      "cId":1021,
+      "sId":10021, //排班号		
       "patient":"病人名字", 
       "apTime":1657238400000,
       "docName":"",

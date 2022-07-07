@@ -153,7 +153,7 @@ export default {
       //获取不同等级科室列表
       async requestData(level){
         this.roomList = []
-        const res = this.axios.get(`/department/showAllByLevel/${level}`)
+        const res = await this.axios.get(`/department/showAllByLevel/${level}`)
         this.roomList = res.data.data
         
       }
