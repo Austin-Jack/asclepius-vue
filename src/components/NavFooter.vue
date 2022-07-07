@@ -44,7 +44,7 @@
         <div class="right">
            <a href="javascript">
             <img src="../assets/imgs/footer/foot-logo.png" alt="">
-            湘公网安备 43010502000766号
+            湘公网安备 2021016077号
            </a> 
         </div>
         <div class="clearfix"></div>
