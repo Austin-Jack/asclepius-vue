@@ -326,7 +326,7 @@ Mock.mock(RegExp("/api/department/showAllByLevel/1"), {data:[
 ]});
 
 // 获取医生列表
-Mock.mock("/api/doctor/1",{data: [
+Mock.mock("/api/doctor/1/1",{data: [
   {
     docId: "2",
     docName: "游鹏",
