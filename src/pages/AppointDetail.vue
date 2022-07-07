@@ -65,6 +65,7 @@
 <script>
 import NavHeader from "../components/NavHeader.vue";
 import PatientCard from '../components/PatientCard.vue'
+import {Dialog,Button,Card,Select,Option,Divider} from 'element-ui'
 
 export default {
   data() {
@@ -134,7 +135,13 @@ export default {
   },
   components: {
     NavHeader,
-    PatientCard
+    PatientCard,
+    [Button.name]:Button,
+    [Dialog.name]:Dialog,
+    [Card.name]:Card,
+    [Select.name]:Select,
+    [Option.name]:Option,
+    [Divider.name]:Divider,
   },
 };
 </script>

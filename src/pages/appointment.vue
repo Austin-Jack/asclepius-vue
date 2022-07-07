@@ -100,6 +100,7 @@
 import "../assets/scss/reset.scss";
 import NavHeader from "../components/NavHeader.vue";
 import NavFooter from "../components/NavFooter.vue";
+import {Button,Dialog,Menu,MenuItem,Input,Pagination,Submenu} from 'element-ui'
 export default {
   data() {
     return {
@@ -131,6 +132,13 @@ export default {
   components: {
     NavHeader,
     NavFooter,
+    [Button.name]:Button,
+    [Dialog.name]:Dialog,
+    [Menu.name]:Menu,
+    [MenuItem.name]:MenuItem,
+    [Input.name]:Input,
+    [Pagination.name]:Pagination,
+    [Submenu.name]:Submenu,
   },
   created() {
     // 获取科室列表
