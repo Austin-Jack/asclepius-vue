@@ -104,7 +104,7 @@ import {Button,Dialog,Menu,MenuItem,Input,Pagination,Submenu} from 'element-ui'
 export default {
   data() {
     return {
-      doctorRank: ["主任医师", "副主任医师", "普通医师"],
+      doctorRank: ["普通医师","副主任医师","主任医师"],
       // 医生列表
       doctorList: [],
       // 科室列表
