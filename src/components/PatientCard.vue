@@ -50,16 +50,11 @@ export default {
     return {
       // 就诊卡信息
       cardForm: {
-        // name: "",
-        // age: null,
-        // sex: 1,
-        // tel: null,
-        // identityID: null,
-        name: "刘畅",
-        age: 20,
-        sex: 0,
-        telNumber: "15773187573",
-        identityID: "43042120010417900X",
+        name: "",
+        age: null,
+        sex: 1,
+        tel: null,
+        identityID: null,
       },
       // 就诊卡的验证规则
       pcardRules: {
@@ -88,8 +83,7 @@ export default {
           return;
         } else {
         // 通过验证则发送请求 添加就诊人
-          const res = await this.axios.post("user/addCard",this.cardForm)
-          console.log(res)
+          const res = await this.axios.post("/private/user/addCard",this.cardForm)
           if(res.data.code === 200){
           this.$emit("getCard")
           }else{

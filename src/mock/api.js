@@ -453,7 +453,13 @@ Mock.mock("/api/private/user/addCard", "post", (options) => {
     // }
   };
 });
-
+Mock.mock("/api/appointment/add","post",()=>{
+  return {
+    code: 200,
+    message: "",
+    data:null
+  }
+})
 Mock.mock("/api/schedule/doctor/2/2", "get", () => {
   return {
     code: 200,

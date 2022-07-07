@@ -50,6 +50,10 @@ const router = new Router({
         {
             path:'/history',
             component: () => import('./pages/history.vue')
+        },
+        {
+            path:'/docdetail',
+            component: () => import('./pages/docDetail.vue')
         }
 
     ]

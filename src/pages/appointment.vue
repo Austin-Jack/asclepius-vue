@@ -37,8 +37,9 @@
               class="doctor_item"
               v-for="item in doctorList"
               :key="item.docId"
+              
             >
-              <img :src="item.docImage" class="photo" />
+              <img :src="item.docImage" class="photo" @click="goDetail(item)" />
               <div class="introduction">
                 <div class="doctorName">{{ item.docName }}</div>
                 <div class="doctorPosition">{{ doctorRank[item.docRank] }}</div>
@@ -140,6 +141,7 @@ export default {
     getLevel(level) {
       this.level = level;
       console.log(this.level, level);
+      this.doctorList=[]
       this.getdepartment();
     },
     // 获取科室列表
@@ -190,18 +192,14 @@ export default {
       }
     },
     async gotoRegister() {
-      //... 此处请求获取验证结果 验证成功则获取卡信息跳转至预约界面
+      //此处请求获取验证结果 验证成功则获取卡信息跳转至预约界面
       const res = await this.axios.get(`/login/${this.verificationCode}`);
       if (res.code === 422) {
         this.showError = true;
       } else {
-        //等待接口完善
-        // window.localStorage.setItem("uid", res.data.uId)
-        window.localStorage.setItem("uid", 1225);
-        // window.localStorage.setItem("token", res.data.token);
+        window.localStorage.setItem("uid", res.data.data.uId);
         window.localStorage.setItem(
-          "token",
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE1MTI1NDQyOTksImV4cCI6MTUxMjYzMDY5OX0.eGrsrvwHm-tPsO9r_pxHIQ5i5L1kX9RX444uwnRGaIM"
+          "token",res.data.data.token
         );
         this.dialogFormVisible = false;
         this.$router.push({
@@ -209,6 +207,13 @@ export default {
         });
       }
     },
+    goDetail(doc){
+      console.log(doc);
+      this.$router.push({
+        path:`/docdetail`,
+        query:{doctor: JSON.stringify(doc)}
+      })
+    }
   },
 };
 </script>
@@ -234,7 +239,7 @@ html {
           .el-pagination {
             position: absolute;
             left: 50%;
-            bottom: 15px;
+            bottom: 20px;
             transform: translateX(-50%);
           }
           .el-pagination.is-background .el-pager li:not(.disabled).active {
@@ -317,7 +322,6 @@ html {
         justify-content: center;
         align-items: center;
         img {
-          // margin: 0 160px;
           width: 220px;
           height: 220px;
         }

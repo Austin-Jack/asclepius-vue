@@ -74,7 +74,7 @@ export default {
       cId: null,
       sId: null,
       // 医生及排班信息
-      doctorDetail:null,
+      doctorDetail:[],
       access_time: [],
       // 就诊人信息
       ofPatient: [],
@@ -82,11 +82,8 @@ export default {
     };
   },
   created(){
-    // 静态测试！！
-    // this.dId = this.$route.params.dId
-    // this.docId = this.$route.params.docId
-    this.dId = 2
-    this.docId = 2
+    this.dId = this.$route.params.dId
+    this.docId = this.$route.params.docId
     this.getPatients()
     this.getSingleSchedul()
   },
@@ -114,14 +111,24 @@ export default {
       this.getPatients()
     },
     // 确认提交预约信息
-    confirmAppoint(){
+    async confirmAppoint(){
       if(this.cId === null || this.sId === null){
         // 提示错误
         this.$message.error('请填写完整！')
       }else {
-        // 请求获取就诊记录单
-        //...此处待写
-        this.$router.push()
+        // 请求预约
+        const res = await this.axios.post('/appointment/add',
+        {cId:this.cId,
+        sId:this.sId,
+        docName:this.doctorDetail.docName,
+        dName:this.doctorDetail.dName,
+        apCost:this.doctorDetail.apCost
+        })
+        if(res.data.code === 200){
+          this.$message.success('挂号成功！')
+        }else{
+          this.$message.error('抱歉，预约已满！')
+        }
       }
     }
   },
