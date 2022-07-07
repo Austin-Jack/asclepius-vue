@@ -399,6 +399,8 @@ _mockjs["default"].mock("/api/schedule/doctor/2/2", "get", function () {
 _mockjs["default"].mock("/api/user/aplist", "get", [{
   "apId": 1000,
   //预约号
+  "cId": 1021,
+  "sId": 10021,
   "patient": "病人名字",
   "apTime": 1657238400000,
   //预约时间
@@ -414,6 +416,9 @@ _mockjs["default"].mock("/api/user/aplist", "get", [{
 
 }, {
   "apId": 1000,
+  "cId": 1021,
+  "sId": 10021,
+  //排班号		
   "patient": "病人名字",
   "apTime": 1657238400000,
   "docName": "",

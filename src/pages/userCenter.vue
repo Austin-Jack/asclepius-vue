@@ -68,6 +68,20 @@
                </el-descriptions-item>
                <el-descriptions-item>
                  <template slot="label">
+                  <i class="el-icon-time"></i>   
+                   就诊卡号
+                 </template>
+                {{item.cId}}
+               </el-descriptions-item>
+                <el-descriptions-item>
+                 <template slot="label">
+                  <i class="el-icon-time"></i>   
+                   排班号
+                 </template>
+                {{item.sId}}
+               </el-descriptions-item>
+               <el-descriptions-item>
+                 <template slot="label">
                    <i class="el-icon-user"></i>
                    就诊人姓名
                  </template>
@@ -113,7 +127,7 @@
                    <i class="el-icon-warning"></i>
                    操作
                  </template>
-                 <el-button type="danger" size="small"  @click="open">取消预约</el-button>
+                 <el-button type="danger" size="small"  @click="open(item.sId,item.cId)">取消预约</el-button>
                </el-descriptions-item>
              </el-descriptions>
            </div>
@@ -184,23 +198,28 @@ export default {
      //删除就诊卡
      deleteCard(id){
        let message = ''
-       this.axios.delete(`/${this.u_id}/${id}`).then(res => {
+       this.axios.delete(`/user/deleteCard/${this.u_id}/${id}`).then(res => {
         message = res.message
         console.log(message);
        })
        this.getCard()
+     },
+     //取消预约
+     cancelAppoint(sId,cId){
+       this.axios.delete(`/user/cancel/${sId}/${cId}`)
      },
      //重新请求数据
      renderData(){
 
      },
      //取消预约弹窗
-     open(){
+     open(sId,cId){
       this.$confirm('此操作将取消该预约, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          this.cancelAppoint(sId,cId)
           this.$message({
             type: 'success',
             message: '取消成功!'
