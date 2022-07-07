@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-parsing-error -->
 <template>
   <div>
     <div class="wrap">
@@ -42,7 +43,7 @@
             <el-card class="box-card information" v-for="(item,index) in cardForm" :key="index">
               <div slot="header" class="clearfix">
              <span>就诊卡</span>
-             <el-button style="float: right; padding: 3px 0" type="danger" @click="open1">删除就诊卡</el-button>
+             <el-button style="float: right; padding: 3px 0" type="danger" @click="open1(item.cId)">删除就诊卡</el-button>
            </div>
            <div class="text item">就诊卡号: {{item.cId}}</div>
            <div class="text item">身份证号: {{item.identityID}}</div>
@@ -57,20 +58,20 @@
         <div class="appoint" v-show="appoint">
            <div class="appoint-wrap">
              <el-descriptions class="margin-top detail" title="预约信息" :column="3" :size="size" border 
-             v-for="item in appointForm" :key="item.cId">
+             v-for="item in appointForm" :key="item.apId">
                <el-descriptions-item>
                  <template slot="label">
-                   <i class="el-icon-user"></i>
-                   就诊人
+                  <i class="el-icon-time"></i>   
+                   预约号
                  </template>
-                {{item.cName}}
+                {{item.apId}}
                </el-descriptions-item>
                <el-descriptions-item>
                  <template slot="label">
-                   <i class="el-icon-time"></i>
-                   预约时间
+                   <i class="el-icon-user"></i>
+                   就诊人姓名
                  </template>
-                 {{item.apTime}}
+                 {{item.patient}}
                </el-descriptions-item>
                <el-descriptions-item>
                  <template slot="label">
@@ -85,6 +86,20 @@
                    科室名称
                  </template>
                  {{item.dName}}
+               </el-descriptions-item>
+               <el-descriptions-item>
+                 <template slot="label">
+                   <i class="el-icon-tickets"></i>
+                   门诊类型
+                 </template>
+                 <span v-text="item.cLevel <=1?(item.cLevel == 0?'普通门诊':'专家门诊'):('国际门诊')"></span>
+               </el-descriptions-item>
+               <el-descriptions-item>
+                 <template slot="label">
+                   <i class="el-icon-tickets"></i>
+                   订单状态
+                 </template>
+                 <span v-text="item.apStatus <=1?(item.apStatus == 0?'已创建':'已取消'):(item.apStatus == 2?'已取消':'已完成')"></span>
                </el-descriptions-item>
                <el-descriptions-item>
                  <template slot="label">
@@ -130,7 +145,7 @@ export default {
      this.u_id = window.localStorage.getItem("uid")
   },
   mounted(){
-    this.getCard(this.u_id);
+    this.getCard();
     this.getAppoint()
   },
   methods: {
@@ -155,18 +170,25 @@ export default {
        }
      },
      //获取就诊卡信息
-     getCard(id){
-       this.axios.get("/private/user/getCards",id).then((res) => {
-          this.cardForm = (res.data)
+     getCard(){
+       this.axios.get("/private/user/getCards",this.u_id).then((res) => {
+          this.cardForm = (res.data.data)
        })
      },
+     //获取预约信息
      getAppoint(){
-        this.axios.get("/private/user/getAppoints").then((res) => {
-          this.appointForm = (res.data)
+        this.axios.get(`/user/aplist/${this.u_id}`).then((res) => {
+          this.appointForm = res.data.data
        })
      },
      //删除就诊卡
-     deleteCard(){
+     deleteCard(id){
+       let message = ''
+       this.axios.delete(`/${this.u_id}/${id}`).then(res => {
+        message = res.message
+        console.log(message);
+       })
+       this.getCard()
      },
      //重新请求数据
      renderData(){
@@ -191,13 +213,13 @@ export default {
         });
      },
      //删除就诊卡弹窗
-     open1(){
+     open1(id){
       this.$confirm('此操作将删除该就诊卡, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.deleteCard()
+          this.deleteCard(id)
           this.$message({
             type: 'success',
             message: '删除成功!'

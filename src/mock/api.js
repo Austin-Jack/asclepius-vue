@@ -479,21 +479,25 @@ Mock.mock("/api/schedule/doctor/2/2", "get", () => {
 });
 
 //获取预约信息
-Mock.mock("/api/private/user/getAppoints","get",[
-  {  
-    "cId":'123',
-    "cName":"章三",
-    "dName":"肾病内科",
-    "apTime":"12点",
-    "docName":"刘鹏举",
-    "apCost":"30"
-  },
+Mock.mock("/api/user/aplist","get",[
   {
-    "cId":'1223',
-    "cName":"zhang三",
-    "dName":"肾病内科",
-    "apTime":"12点",
-    "docName":"刘鹏举",
-    "apCost":"30"
-  },
+    "apId":1000,		//预约号
+    "patient":"病人名字", 
+    "apTime":1657238400000,  //预约时间
+    "docName":"", //医生名称
+    "dName":"老年科", //科室名称
+    "cLevel":3, //门诊类型 0普通,1专家,2国际
+    "apCost":30, //挂号费
+    "apStatus":3 //状态 0已创建,1已取消,2已过期(没有去而且时间到了),3已完成
+},
+{
+      "apId":1000,		
+      "patient":"病人名字", 
+      "apTime":1657238400000,
+      "docName":"",
+      "dName":"老年科",
+      "cLevel":0,
+      "apCost":30, 
+      "apStatus":0
+  }
 ]);

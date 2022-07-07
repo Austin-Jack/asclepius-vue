@@ -6,28 +6,28 @@
           <div class="bkc">
           <div class="nav-menu">
             <ul class="menu-wrap" >
-               <li class="menu-item" v-for= "(item,index) in roomList" :key = "index">
-                <a href="javascript:;">{{item.name}}</a>
+               <li class="menu-item" v-for= "(item,index) of roomList" :key = "index">
+                <a href="javascript:;">{{item.cliName}}</a>
                 <div class="children">
                    <ul>
-                    <li @click="getTable(items.dId)"  v-for = "(items,index) in item.data" :key = "index">{{items.name}}</li>
+                    <li @click="getTable(items.dId)"  v-for = "(items,dId) of item.departments" :key = "dId" >{{items.name}}</li>
                    </ul>
                 </div>
                 <div class="table-wrap" style="display: none;">
                 <table class="table-main" cellpadding="20" cellspacing="0">
                     <tr class="head">
-                      <th class="head">班次/周次</th>
+                      <th class="head">周次/班次</th>
                       <td class="head" v-for="(item,index) of Dates" :key="index">{{item}}</td>
                     </tr>
                     <tr>
                       <th class="doc" rowspan="2">上午</th>
-                      <td class="doc" rowspan="2" v-for = "(item,index) of AM" :key="index">{{item.am.join('\r')}}</td>
+                      <td class="doc" rowspan="2" v-for = "(item,index) of AM" :key="index">{{item.join('\r')}}</td>
                     </tr>
                     <tr>
                     </tr>
                     <tr>
                       <th class="doc" rowspan="2">下午</th>
-                      <td class="doc" rowspan="2" v-for = "(item,index) of PM" :key="index">{{item.pm.join('\r')}}</td>
+                      <td class="doc" rowspan="2" v-for = "(item,index) of PM" :key="index">{{item.join('\r')}}</td>
                     </tr>
                     <tr>
                     </tr>
@@ -40,9 +40,9 @@
             <div class="list">
               <h2 class="title">门诊排班</h2>
               <ul class="ul">
-                <li><a href="javascript:;" @click="requestData()">普通门诊</a></li>
-                <li><a href="javascript:;" @click="requestData()">专家门诊</a></li>
-                <li><a href="javascript:;" @click="requestData()">国际门诊</a></li>
+                <li><a href="javascript:;" @click="requestData(0)">普通门诊</a></li>
+                <li><a href="javascript:;" @click="requestData(1)">专家门诊</a></li>
+                <li><a href="javascript:;" @click="requestData(2)">国际门诊</a></li>
               </ul>
             </div>
             <div class="blank"></div>
@@ -62,9 +62,9 @@ export default {
     name:'sche',
     data(){
       return{
-        roomList:[],
-        Data:[],
-        List_data:[],
+        roomList:[], //科室列表
+        Data:[], 
+        List_data:[], 
         AM:[],
         PM:[],
         Dates:[]
@@ -76,56 +76,55 @@ export default {
     },
     mounted(){
       this.getDate()
-      this.axios.get('/user').then((res) => {
-        this.Data.push(res.data.data)
+      this.axios.get('/department/showAllByLevel/0').then((res) =>{
+      this.roomList = res.data.data
       })
-      this.axios.get('/roomList').then((res) =>{
-      for(let i = 0; i < res.data.data.length; i++){
-        this.roomList.push(res.data.data[i])
-      }
-      })
+      this.axios.get(`schedule/department/1`).then(res =>{
+            this.Data = res.data.data
+            this.getTableData()
+          })
     },
     methods:{
       //获取排班表格
-      getTable(id){
-          let tab = document.getElementsByClassName('table-wrap')
-          tab[0].attributes[1].nodeValue = 'display : none'
-          setTimeout(function(){
-            tab[0].attributes[1].nodeValue = 'display : block'
-          },300)
+      async getTable(id){
           this.List_data = []
-          this.getTableData(id)
+          const res = await this.axios.get(`schedule/department/${id}`)
+          this.Data = res.data.data
+          this.getTableData()
       },
-      getTableData(id){
-         for(let items of this.Data){
-          if(items.dId == id){
-          for(let item of items.data){       
-              this.List_data.push(item)
+      getTableData(){
+         for(let items of this.Data){     
+          this.List_data.push(items)
           }
-          }
-         }
-
-        this.applyList(this.List_data)  
-      },
+          this.applyList(this.List_data)  
+         },
+      
       //保存数据
       applyList(data){
-
           this.AM = []
           this.PM = []
           this.getAm(data)
           this.getPm(data)
+          this.tableOut()
       },
       //获取上午值班医生
       getAm(data){
-          for(let i = 0; i < data.length; i = i + 2){
+          for(let i = 0; i < data.length/2; i++){
             this.AM.push(data[i])
         }
       },
       //获取下午值班医生
       getPm(data){ 
-           for(let i = 1; i < data.length; i = i + 2){
+           for(let i = 7; i < data.length; i++){
             this.PM.push(data[i])
         }
+      },
+      tableOut(){
+        let tab = document.getElementsByClassName('table-wrap')
+          tab[0].attributes[1].nodeValue = 'display : none'
+          setTimeout(function(){
+            tab[0].attributes[1].nodeValue = 'display : block'
+          },300)
       },
       //获取当前日期
       getDate(){
@@ -151,12 +150,16 @@ export default {
             }
           }
       },
-      //请求页面数据
-      // requestData(params){
-      //   this.axios.get()
-      // }
+      //获取不同等级科室列表
+      async requestData(level){
+        this.roomList = []
+        const res = this.axios.get(`/department/showAllByLevel/${level}`)
+        this.roomList = res.data.data
+        
+      }
       } 
-      } 
+}
+    
 </script>
 
 <style lang="scss">
@@ -210,8 +213,8 @@ export default {
                }
                .children{
                 display: none; 
-                width: 600px;
-                height: 500px;
+                width: 500px;
+                height: 300px;
                 background-color: $colorG;
                 position: absolute;
                 top: 0px;
@@ -230,6 +233,9 @@ export default {
                     width: 33.3%;
                     font-size: 18px;
                     cursor: pointer;
+                    &:hover{
+                      background-color: orange;
+                    }
                   }
                 }
                }
@@ -248,6 +254,7 @@ export default {
                      width: 12.5%;
                      border-right:1px black solid;
                      border-bottom:1px black solid;
+                     font-size: 12px;
                      text-align: center;
                      padding: 0;
                     }
