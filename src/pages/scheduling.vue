@@ -10,7 +10,8 @@
                 <a href="javascript:;">{{item.cliName}}</a>
                 <div class="children">
                    <ul>
-                    <li @click="getTable(items.dId)"  v-for = "(items,dId) of item.departments" :key = "dId" >{{items.name}}</li>
+                    <li @click="getTable(items.dId)"  v-for = "(items,dId) of item.departments" :key = "dId" >{{items.name}}
+                    </li>
                    </ul>
                 </div>
                 <div class="table-wrap" style="display: none;">
@@ -124,7 +125,7 @@ export default {
           tab[0].attributes[1].nodeValue = 'display : none'
           setTimeout(function(){
             tab[0].attributes[1].nodeValue = 'display : block'
-          },300)
+          },10)
       },
       //获取当前日期
       getDate(){
@@ -155,7 +156,6 @@ export default {
         this.roomList = []
         const res = await this.axios.get(`/department/showAllByLevel/${level}`)
         this.roomList = res.data.data
-        
       }
       } 
 }

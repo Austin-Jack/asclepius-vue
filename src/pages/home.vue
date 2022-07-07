@@ -19,7 +19,7 @@
                 class="item"
                 edit_params="title1Show%3D1%26title1Max%3D8%26showLink%3D1"
               >
-                <a href="javascript:;">
+                <a href="/#/appointment/0">
                   <img src="../assets/imgs/home/sun_i03.png" alt="" />
                   <div class="div">预约挂号</div>
                 </a>
@@ -46,7 +46,7 @@
               <a
                 href="https://beian.miit.gov.cn/#/Integrated/index"
                 target="_blank"
-                >网站备案号： 湘公网安备 43010502000766号
+                >网站备案号： 湘公网安备 2021016077号
               </a>
             </div>
           </div>
@@ -102,8 +102,8 @@
                     <img src="../assets/imgs/home/ydy-6.png" alt="" />
                   </div>
                   <div class="text">
-                    <div class="tit">员工版</div>
-                    <div class="tit1">FOR STAFF &amp; STUDENTS</div>
+                    <div class="tit">个人中心</div>
+                    <div class="tit1">USER CENTER</div>
                   </div>
                 </div>
               </div>
@@ -117,8 +117,8 @@
                 <div class="conbox">
                   <div class="hovercont">
                     <div class="text">
-                      <div class="tit">员工</div>
-                      <div class="tit1">FOR STAFF &amp; STUDENTS</div>
+                      <div class="tit">个人中心</div>
+                      <div class="tit1">USER CENTER</div>
                     </div>
                     <div class="yuanbox">
                       <div class="img">
@@ -182,10 +182,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("http://www.wchscu.cn/Public/static/themes/css/global.css");
-@import url("http://www.wchscu.cn/Public/static/themes/css/animate.css");
-@import url("http://www.wchscu.cn/Public/static/themes/css/lyc.css");
-@import url("http://www.wchscu.cn/Public/static/themes/css/lys.css");
+@import url("https://www.wchscu.cn/Public/static/themes/css/global.css");
+@import url("https://www.wchscu.cn/Public/static/themes/css/animate.css");
+@import url("https://www.wchscu.cn/Public/static/themes/css/lyc.css");
+@import url("https://www.wchscu.cn/Public/static/themes/css/lys.css");
 .ydybox {
 
   height: 1000px;
