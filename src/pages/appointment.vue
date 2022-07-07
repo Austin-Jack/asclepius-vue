@@ -19,7 +19,8 @@
               <i class="el-icon-location" style="color: #fff"></i>
               <span>{{ cli.cliName }}</span>
             </template>
-            <el-menu-item @click="getDoctors(depart.dId)"
+            <el-menu-item
+              @click="getDoctors(depart.dId)"
               v-for="depart in cli.departments"
               :key="depart.dId"
               :index="depart.dId + ''"
@@ -29,21 +30,37 @@
         </el-menu>
       </div>
       <div class="main">
-        <div class="doctor">
-          <div class="massage" v-if="msgShow">请选择科室~</div>
-          <div class="doctor_item" v-for="item in doctorList" :key="item.docId" >
-            <img :src="item.docImage" class="photo" />
-            <div class="introduction">
-              <div class="doctorName">{{ item.docName }}</div>
-              <div class="doctorPosition">{{doctorRank[item.docRank]}}</div>
-              <el-button
-                size="mini"
-                type="primary"
-                icon="el-icon-edit-outline "
-                @click="getToken(item.docId)"
-                >挂号</el-button
-              >
+        <div class="main_wrap">
+          <div class="doctor">
+            <div class="massage" v-if="msgShow">请选择科室~</div>
+            <div
+              class="doctor_item"
+              v-for="item in doctorList"
+              :key="item.docId"
+            >
+              <img :src="item.docImage" class="photo" />
+              <div class="introduction">
+                <div class="doctorName">{{ item.docName }}</div>
+                <div class="doctorPosition">{{ doctorRank[item.docRank] }}</div>
+                <el-button
+                  size="mini"
+                  type="primary"
+                  icon="el-icon-edit-outline "
+                  @click="getToken(item.docId)"
+                  >挂号</el-button
+                >
+              </div>
             </div>
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="total"
+              :page-size="8"
+              small
+              @current-change="pageChange"
+              :current-page.sync="pageNum"
+            >
+            </el-pagination>
           </div>
         </div>
       </div>
@@ -85,26 +102,29 @@ import NavFooter from "../components/NavFooter.vue";
 export default {
   data() {
     return {
-
-      doctorRank:["主任医师","副主任医师","普通医师"],
+      doctorRank: ["主任医师", "副主任医师", "普通医师"],
       // 医生列表
       doctorList: [],
       // 科室列表
       departments: [],
       // 门诊等级
-      level:0,
+      level: 0,
       dialogFormVisible: false,
       // 验证码
       verificationCode: null,
       uid: null,
       // 选择的科室id
-      dId:null,
+      dId: null,
       // 验证码错误控制键
       showError: false,
       // 占位massage控制键
       msgShow: true,
       // 选择的医生id
-      docId:null
+      docId: null,
+      // 当前页码
+      pageNum:1,
+      // 总条数
+      total:null
     };
   },
   components: {
@@ -112,30 +132,39 @@ export default {
     NavFooter,
   },
   created() {
-    // ...此处获取level（待完成）
-    // this.getLevel()
     // 获取科室列表
     this.getdepartment();
   },
   methods: {
     // 获取门诊等级
-    getLevel(level){
-      this.level = level
-      console.log(this.level,level)
-      this.getdepartment()
+    getLevel(level) {
+      this.level = level;
+      console.log(this.level, level);
+      this.getdepartment();
     },
     // 获取科室列表
     async getdepartment() {
       // const res = await this.axios.get("/department/showAll");
-      const res = await this.axios.get(`/department/showAllByLevel/${this.level}`)
+      const res = await this.axios.get(
+        `/department/showAllByLevel/${this.level}`
+      );
       console.log(res);
       this.departments = res.data.data;
     },
-    async getDoctors(dId){
-      this.msgShow = false
-      this.dId = dId
-      const res = await this.axios.get(`/doctor/${dId}`);
-      console.log(res)
+    // 当前页码改变 发送请求
+    async pageChange(currentPage){
+      this.pageNum = currentPage
+      const res = await this.axios.get(`/doctor/${this.dId}/${this.pageNum}`);
+      this.doctorList = res.data.data;
+    },
+    // 根据科室和页码获取医生列表
+    async getDoctors(dId) {
+      this.msgShow = false;
+      this.dId = dId;
+      // 重置当前页码
+      this.pageNum = 1
+      const res = await this.axios.get(`/doctor/${this.dId}/${this.pageNum}`);
+      this.total = Number(res.data.message)
       this.doctorList = res.data.data;
     },
     // 获取token验证
@@ -148,17 +177,16 @@ export default {
       } else {
         // 请求token是否有效
         const res = await this.axios.get(`/login/validity/${token}`);
-        if (res.data.code === 200){
+        if (res.data.code === 200) {
           // 有效则跳转
-          this.docId = docId
+          this.docId = docId;
           this.$router.push({
-          path: `/detail/${this.dId}/${this.docId}`,
-        })
-        }else{
+            path: `/detail/${this.dId}/${this.docId}`,
+          });
+        } else {
           // 无效则弹窗重新验证
           this.dialogFormVisible = true;
         }
-        
       }
     },
     async gotoRegister() {
@@ -169,7 +197,7 @@ export default {
       } else {
         //等待接口完善
         // window.localStorage.setItem("uid", res.data.uId)
-        window.localStorage.setItem("uid", 1225)
+        window.localStorage.setItem("uid", 1225);
         // window.localStorage.setItem("token", res.data.token);
         window.localStorage.setItem(
           "token",
@@ -200,17 +228,40 @@ html {
     .main {
       flex: 4;
       background-color: #9e86602d;
+      .main_wrap {
+        position: relative;
+        ::v-deep {
+          .el-pagination {
+            position: absolute;
+            left: 50%;
+            bottom: 15px;
+            transform: translateX(-50%);
+          }
+          .el-pagination.is-background .el-pager li:not(.disabled).active {
+            background-color: #9e8660; // 进行修改选中项背景和字体
+            color: #fff;
+          }
+          .el-pagination.is-background.el-pagination--small .btn-next,
+          .el-pagination.is-background.el-pagination--small .btn-prev,
+          .el-pagination.is-background.el-pagination--small .el-pager li {
+            margin: 0 3px;
+            min-width: 50px;
+          }
+        }
+      }
       .doctor {
-        height: 100%;
+        height: 780px;
         display: flex;
         justify-content: flex-start;
         align-content: flex-start;
         flex-wrap: wrap;
         padding-top: 20px;
+
         .massage {
           position: absolute;
-          top: 530px;
-          left: 830px;
+          top: 50%;
+          left: 50%;
+          transform: translateX(-50%);
           color: #9e8660;
           font-size: 40px;
           font-weight: bold;
