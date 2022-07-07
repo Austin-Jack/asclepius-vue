@@ -18,7 +18,7 @@ require("./assets/font/iconfont.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var mock = true;
+var mock = false;
 
 if (mock) {
   require("./mock/api");
