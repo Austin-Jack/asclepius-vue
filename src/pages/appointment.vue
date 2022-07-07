@@ -154,7 +154,6 @@ export default {
     },
     // 获取科室列表
     async getdepartment() {
-      // const res = await this.axios.get("/department/showAll");
       const res = await this.axios.get(
         `/department/showAllByLevel/${this.level}`
       );
@@ -288,6 +287,7 @@ html {
           .photo {
             width: 100%;
             height: 100%;
+            cursor: pointer;
           }
           .introduction {
             position: absolute;

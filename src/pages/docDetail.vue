@@ -93,6 +93,7 @@ export default {
     display: flex;
     justify-content: space-around;
     .detail_img {
+      width: 232px;
       height: 340px;
       margin-top: 38px;
     }
