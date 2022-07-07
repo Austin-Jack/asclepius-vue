@@ -10,14 +10,14 @@ var _store = _interopRequireDefault(require("./store"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
-var _elementUi = _interopRequireDefault(require("element-ui"));
-
-require("element-ui/lib/theme-chalk/index.css");
-
 require("./assets/font/iconfont.css");
+
+var _elementUi = require("element-ui");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import ElementUI from "element-ui";
+// import "element-ui/lib/theme-chalk/index.css";
 var mock = false;
 
 if (mock) {
@@ -33,10 +33,8 @@ _axios["default"].interceptors.request.use(function (config) {
 });
 
 _vue["default"].config.productionTip = false;
-_vue["default"].prototype.axios = _axios["default"];
-
-_vue["default"].use(_elementUi["default"]); // 时间戳格式化过滤器
-
+_vue["default"].prototype.axios = _axios["default"]; // Vue.use(ElementUI);
+// 时间戳格式化过滤器
 
 _vue["default"].filter("formatTime", function (val) {
   var date = new Date(val);
@@ -50,6 +48,8 @@ _vue["default"].filter("formatTime", function (val) {
   return y + "-" + MM + "-" + d + " " + h;
 });
 
+_vue["default"].prototype.$message = _elementUi.Message;
+_vue["default"].prototype.$confirm = _elementUi.MessageBox.confirm;
 new _vue["default"]({
   router: _router["default"],
   store: _store["default"],

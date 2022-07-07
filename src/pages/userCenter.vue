@@ -40,7 +40,7 @@
         <div class="card" v-show="card">
           <!-- <el-button class="add" type="success">添加就诊卡</el-button> -->
           <div class="card-wrap">
-            <el-card class="box-card information" v-for="(item,index) in cardForm" :key="index">
+            <el-card class="box-card information" v-for="item in cardForm" :key="item.cId">
               <div slot="header" class="clearfix">
              <span>就诊卡</span>
              <el-button style="float: right; padding: 3px 0" type="danger" @click="open1(item.cId)">删除就诊卡</el-button>
@@ -52,7 +52,6 @@
            <div class="text item">就诊人年龄: {{item.age}}</div>
            <div class="text item">手机号: {{item.telNumber}}</div>
          </el-card>
-         
           </div>
         </div>
         <div class="appoint" v-show="appoint">
@@ -141,8 +140,18 @@
 
 
 <script>
+import {Descriptions,DescriptionsItem,Card,Button,PageHeader,Menu,MenuItem} from 'element-ui'
 export default {
   name: "user",
+  components:{
+   [Descriptions.name]:Descriptions,
+   [DescriptionsItem.name]:DescriptionsItem,
+   [Card.name]:Card,
+   [Button.name]:Button,
+   [PageHeader.name]:PageHeader,
+   [Menu.name]:Menu,
+   [MenuItem.name]:MenuItem
+  },
   data(){
     return{
       card:true,
@@ -152,7 +161,7 @@ export default {
       ],
       appointForm:[],
       u_id:'',
-      size: ''
+      size: '',
     }
   },
   created(){
@@ -191,8 +200,8 @@ export default {
      },
      //获取预约信息
      getAppoint(){
-        this.axios.get(`/user/aplist/${this.u_id}`).then((res) => {
-          this.appointForm = res.data.data
+        this.axios.get(`/user/aplist`).then((res) => {
+          this.appointForm = res.data
        })
      },
      //删除就诊卡

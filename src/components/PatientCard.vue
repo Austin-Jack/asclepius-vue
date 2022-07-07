@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import {Form,FormItem,Radio,RadioGroup,Button,Input} from 'element-ui'
 export default {
   data() {
     var checkMobile = (rule, value, cb) => {
@@ -96,6 +97,14 @@ export default {
       this.$emit("cancelCard")
     }
   },
+  components:{
+   [Form.name]:Form,
+   [FormItem.name]:FormItem,
+   [Radio.name]:Radio,
+   [Button.name]:Button,
+   [RadioGroup.name]:RadioGroup,
+   [Input.name]:Input
+  }
 };
 </script>
 

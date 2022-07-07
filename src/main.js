@@ -3,10 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
-import ElementUI from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
+// import ElementUI from "element-ui";
+// import "element-ui/lib/theme-chalk/index.css";
 import "./assets/font/iconfont.css"
-const mock = true;
+import {Message} from 'element-ui'
+import {MessageBox} from 'element-ui'
+const mock = false;
 if (mock) {
   require("./mock/api");
 }
@@ -19,7 +21,7 @@ axios.interceptors.request.use((config) => {
 });
 Vue.config.productionTip = false;
 Vue.prototype.axios = axios;
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 // 时间戳格式化过滤器
 Vue.filter("formatTime", function (val) {
   const date = new Date(val);
@@ -32,7 +34,8 @@ Vue.filter("formatTime", function (val) {
   h = h <= 12 ? "上午" : "下午";
   return y + "-" + MM + "-" + d + " " + h;
 });
-
+Vue.prototype.$message = Message 
+Vue.prototype.$confirm = MessageBox.confirm;
 new Vue({
   router,
   store,
