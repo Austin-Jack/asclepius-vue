@@ -104,9 +104,9 @@
               <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-time"></i>
-                  排班号
+                  预约时间
                 </template>
-                {{ item.sId }}
+                {{ item.apTime | formatTime}}
               </el-descriptions-item>
               <el-descriptions-item>
                 <template slot="label">
@@ -177,11 +177,19 @@
                   type="danger"
                   size="small"
                   @click="open(item.sId, item.cId)"
+                  v-show="item.apStatus == 0"
                   >取消预约</el-button
                 >
               </el-descriptions-item>
             </el-descriptions>
           </div>
+           <el-pagination
+             layout="prev, pager, next"
+             :total="total"
+             :pageSize="pageSize"
+             @current-change="handleChange"
+             >
+           </el-pagination>
         </div>
         <div class="medcine" v-show="medcine">
          <div class="medcine-wrap">
@@ -229,7 +237,7 @@
                 </template>
                 {{ item.preStatus?'已取药':'待取药'}}
               </el-descriptions-item>
-            </el-descriptions></div>
+          </el-descriptions></div>
       </div>
     </div>
     </div>
@@ -249,7 +257,8 @@ import {
   MenuItem,
   Dialog,
   Input,
-  Icon
+  Icon,
+  Pagination
 } from "element-ui";
 export default {
   name: "user",
@@ -264,6 +273,7 @@ export default {
     [Dialog.name]: Dialog,
     [Input.name]: Input,
     [Icon.name]: Icon,
+    [Pagination.name]: Pagination,
     PatientCard,
   },
   data() {
@@ -271,12 +281,15 @@ export default {
       card: true,
       appoint: false,
       medcine: false,
-      cardForm: [],
-      appointForm: [],
-      medcineForm:[],
+      cardForm: [], //就诊卡信息
+      appointForm: [],  //预约信息
+      medcineForm:[], //处方药信息
       u_id: "",
       size: "",
-      dialogVisible:false
+      dialogVisible:false,
+      pageSize:3,
+      pageNum:1,
+      total:0
     };
   },
   created(){
@@ -324,9 +337,10 @@ export default {
     },
     //获取预约信息
     getAppoint() {
-      this.axios.get(`/private/user/aplist/${this.u_id}`).then((res) => {
+      this.axios.get(`/private/user/aplist/${this.u_id}/${this.pageNum}`).then((res) => {
         if(res.data.code == 200){
         this.appointForm = res.data.data;
+        this.total = Number(res.data.message)
         }else{
           this.$message.error('获取预约失败')
         }
@@ -395,6 +409,10 @@ export default {
           });
         });
     },
+    handleChange(pageNum){
+     this.pageNum = pageNum
+     this.getAppoint()
+    }
   },
 };
 </script>

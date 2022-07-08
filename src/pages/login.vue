@@ -63,7 +63,7 @@ export default {
         if (res.code === 422) {
           this.showError = true;
         } else {
-          window.localStorage.setItem("uid", res.data.data.uId);
+          window.localStorage.setItem("uId", res.data.data.uId);
           window.localStorage.setItem("token", res.data.data.token);
           this.dialogVisible = false;
           this.$router.go(-2);
