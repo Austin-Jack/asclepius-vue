@@ -27,7 +27,10 @@ const router = new Router({
         {   
             path:'/appointment/:level' ,
             name:'appointment',
-            component: () => import('./pages/appointment.vue') 
+            component: () => import('./pages/appointment.vue'),
+            meta: {
+                keepAlive: true
+              }
         },
         {
             path:'/detail/:dId/:docId',

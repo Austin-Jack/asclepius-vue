@@ -201,7 +201,6 @@ export default {
       if (res.code === 422) {
         this.showError = true;
       } else {
-        console.log(res.data.data)
         window.localStorage.setItem("uId", res.data.data.uId);
         window.localStorage.setItem(
           "token",res.data.data.token
@@ -213,7 +212,6 @@ export default {
       }
     },
     goDetail(doc){
-      console.log(doc);
       this.$router.push({
         path:`/docdetail`,
         query:{doctor: JSON.stringify(doc)}
