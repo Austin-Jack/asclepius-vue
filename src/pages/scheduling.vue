@@ -3,40 +3,6 @@
     <nav-header></nav-header>
     <div class="container">
        <div class="main">
-          <div class="bkc">
-          <div class="nav-menu">
-            <ul class="menu-wrap" >
-               <li class="menu-item" v-for= "(item,index) of roomList" :key = "index">
-                <a href="javascript:;">{{item.cliName}}</a>
-                <div class="children">
-                   <ul>
-                    <li @click="getTable(items.dId)"  v-for = "(items,dId) of item.departments" :key = "dId" >{{items.name}}
-                    </li>
-                   </ul>
-                </div>
-                <div class="table-wrap" style="display: none;">
-                <table class="table-main" cellpadding="20" cellspacing="0">
-                    <tr class="head">
-                      <th class="head">周次/班次</th>
-                      <td class="head" v-for="(item,index) of Dates" :key="index">{{item}}</td>
-                    </tr>
-                    <tr>
-                      <th class="doc" rowspan="2">上午</th>
-                      <td class="doc" rowspan="2" v-for = "(item,index) of AM" :key="index">{{item.join('\r')}}</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                    <tr>
-                      <th class="doc" rowspan="2">下午</th>
-                      <td class="doc" rowspan="2" v-for = "(item,index) of PM" :key="index">{{item.join('\r')}}</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                </table>
-                </div>
-               </li>
-            </ul>
-          </div>
           <div class="nav-type">
             <div class="list">
               <h2 class="title">门诊排班</h2>
@@ -48,8 +14,42 @@
             </div>
             <div class="blank"></div>
           </div>
+          <div class="wrapper">
+          <div class="nav-menu">
+            <ul class="menu-wrap" >
+               <li class="menu-item" v-for= "(item,index) of roomList" :key = "index">
+                <a href="javascript:;">{{item.cliName}}</a>
+                <div class="children">
+                   <ul>
+                    <li @click="getTable(items.dId)"  v-for = "(items,dId) of item.departments" :key = "dId" >{{items.name}}
+                    </li>
+                   </ul>
+                </div>
+               </li>
+            </ul>
+          </div>
+          <div class="table-wrap" style="display: none;">
+          <table class="table-main" cellpadding="20" cellspacing="0">
+              <tr class="head">
+                <th class="head">周次/班次</th>
+                <td class="head" v-for="(item,index) of Dates" :key="index">{{item}}</td>
+              </tr>
+              <tr>
+                <th class="doc" rowspan="2">上午</th>
+                <td class="doc" rowspan="2" v-for = "(item,index) of AM" :key="index">{{item.join('\r')}}</td>
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+                <th class="doc" rowspan="2">下午</th>
+                <td class="doc" rowspan="2" v-for = "(item,index) of PM" :key="index">{{item.join('\r')}}</td>
+              </tr>
+              <tr>
+              </tr>
+          </table>
+          </div>
+          </div>          
        </div> 
-    </div>
     </div>
     <nav-footer></nav-footer>
 </div>
@@ -123,9 +123,8 @@ export default {
       tableOut(){
         let tab = document.getElementsByClassName('table-wrap')
           tab[0].attributes[1].nodeValue = 'display : none'
-          setTimeout(function(){
-            tab[0].attributes[1].nodeValue = 'display : block'
-          },10)
+          tab[0].attributes[1].nodeValue = 'display : block'
+
       },
       //获取当前日期
       getDate(){
@@ -178,15 +177,18 @@ export default {
         width: 100%;
         height: 100%;
         background-color: #ffffff;
-         .nav-menu{
+        .wrapper{
+          width: 100%;
+          display: flex;
+          .nav-menu{
+            position: relative;
             box-sizing: border-box;
-            position: absolute;
-            width: 264px;
+            width: 20%;
             height: 500px;
             padding: 40px 0;
-            margin-left:10px ;
+            margin-left:50px ;
+            margin-top: 50px;
             background-color: #55585A7A;
-            top:280px;
             .menu-wrap{
              .menu-item{
                height: 45px;
@@ -217,8 +219,8 @@ export default {
                 height: 300px;
                 background-color: $colorG;
                 position: absolute;
-                top: 0px;
-                left: 264px;
+                left:100%;
+                top: 0;
                 z-index: 10;
                 border: 1px solid $colorH;
                 ul{
@@ -239,47 +241,45 @@ export default {
                   }
                 }
                }
-               .table-wrap{
-                  position: absolute;
-                  width:900px;
-                  height: 500px;
-                  top: 0;
-                  left: 264px;
-                  background: url('../assets/imgs/typebk.jpg') no-repeat center;
-                  background-size: cover;
-                  .table-main{
-                    width: 100%;
-                    font-size:16px;
-                    td{
-                     width: 12.5%;
-                     border-right:1px black solid;
-                     border-bottom:1px black solid;
-                     font-size: 12px;
-                     text-align: center;
-                     padding: 0;
-                    }
-                    th{
-                     width:12.5%;
-                     border-right:1px black solid;
-                     border-bottom:1px black solid;
-                     text-align: center;
-                     padding: 0;
-                    }
-                    .doc{
-                     height: 200px;
-                    }
-                    .head{
-                     height: 96px;
-                    }
-                  }
-               }
-               .table-wrap:hover{
-                 z-index: 10;
-               } 
+              
              } 
             } 
          
-        } 
+         }
+          .table-wrap{
+           width: 80%;
+           margin-top: 50px;
+           margin-right: 50px;
+           height: 500px;
+           background: url('../assets/imgs/typebk.jpg') no-repeat center;
+           background-size: cover;
+           .table-main{
+             width: 100%;
+             font-size:16px;
+             td{
+              width: 12.5%;
+              border-right:1px black solid;
+              border-bottom:1px black solid;
+              font-size: 12px;
+              text-align: center;
+              padding: 0;
+             }
+             th{
+              width:12.5%;
+              border-right:1px black solid;
+              border-bottom:1px black solid;
+              text-align: center;
+              padding: 0;
+             }
+             .doc{
+              height: 200px;
+             }
+             .head{
+              height: 96px;
+             }
+           }
+         } 
+        }
         .nav-type{
           box-sizing: border-box;
           widows: 100%;
