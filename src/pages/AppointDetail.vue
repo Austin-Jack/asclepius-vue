@@ -75,7 +75,7 @@ export default {
       cId: null,
       sId: null,
       // 医生及排班信息
-      doctorDetail:[],
+      doctorDetail:{},
       access_time: [],
       // 就诊人信息
       ofPatient: [],
@@ -92,13 +92,12 @@ export default {
     // 获取该医生信息及排班
     async getSingleSchedul(){
       const res = await this.axios.get(`/schedule/doctor/${this.dId}/${this.docId}`,)
-      console.log(res)
       this.doctorDetail = res.data.data
     },
     // 获取就诊人信息
     async getPatients(){
-      const uid = window.localStorage.getItem("uid")
-      const res = await this.axios.get("/private/user/getCards",{uId:uid})
+      const uId = window.localStorage.getItem("uId")
+      const res = await this.axios.get(`/private/user/getCards?uId=${uId}`)
       this.ofPatient = res.data.data
     },
     // 打开添加就诊人弹窗
@@ -106,10 +105,10 @@ export default {
       this.dialogVisible = true
     },
     // 确认就诊人信息后关闭弹窗
-    getCardInfo(){
+    getCardInfo(patients){
       this.dialogVisible= false
       // 更新就诊人信息
-      this.getPatients()
+      this.ofPatient = patients
     },
     // 确认提交预约信息
     async confirmAppoint(){
@@ -118,7 +117,7 @@ export default {
         this.$message.error('请填写完整！')
       }else {
         // 请求预约
-        const res = await this.axios.post('/appointment/add',
+        const res = await this.axios.post('/private/user/appointment/add',
         {cId:this.cId,
         sId:this.sId,
         docName:this.doctorDetail.docName,

@@ -104,7 +104,7 @@ import {Button,Dialog,Menu,MenuItem,Input,Pagination,Submenu} from 'element-ui'
 export default {
   data() {
     return {
-      doctorRank: ["普通医师","副主任医师","主任医师"],
+      doctorRank: ["主任医师","副主任医师","普通医师"],
       // 医生列表
       doctorList: [],
       // 科室列表
@@ -148,7 +148,6 @@ export default {
     // 获取门诊等级
     getLevel(level) {
       this.level = level;
-      console.log(this.level, level);
       this.doctorList=[]
       this.getdepartment();
     },
@@ -157,7 +156,6 @@ export default {
       const res = await this.axios.get(
         `/department/showAllByLevel/${this.level}`
       );
-      console.log(res);
       this.departments = res.data.data;
     },
     // 当前页码改变 发送请求
@@ -178,17 +176,16 @@ export default {
     },
     // 获取token验证
     async getToken(docId) {
+      this.docId = docId;
       // ...此处为获取token
       const token = window.localStorage.getItem("token");
-      console.log(token);
       if (token === null) {
         this.dialogFormVisible = true;
       } else {
         // 请求token是否有效
-        const res = await this.axios.get(`/login/validity/${token}`);
+        const res = await this.axios.get(`/login/validity`);
         if (res.data.code === 200) {
           // 有效则跳转
-          this.docId = docId;
           this.$router.push({
             path: `/detail/${this.dId}/${this.docId}`,
           });
@@ -204,7 +201,8 @@ export default {
       if (res.code === 422) {
         this.showError = true;
       } else {
-        window.localStorage.setItem("uid", res.data.data.uId);
+        console.log(res.data.data)
+        window.localStorage.setItem("uId", res.data.data.uId);
         window.localStorage.setItem(
           "token",res.data.data.token
         );
