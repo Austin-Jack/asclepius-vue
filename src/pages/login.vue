@@ -60,7 +60,7 @@ export default {
       if (!this.verificationCode) this.$message("验证码为空");
       else {
         const res = await this.axios.get(`/login/${this.verificationCode}`);
-        if (res.code === 422) {
+        if (res.data.code === 422) {
           this.showError = true;
         } else {
           window.localStorage.setItem("uId", res.data.data.uId);

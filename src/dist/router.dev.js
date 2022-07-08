@@ -11,6 +11,8 @@ var _vueRouter = _interopRequireDefault(require("vue-router"));
 
 var _index = _interopRequireDefault(require("./pages/index"));
 
+var _this = void 0;
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -47,6 +49,9 @@ var router = new _vueRouter["default"]({
       return Promise.resolve().then(function () {
         return _interopRequireWildcard(require('./pages/appointment.vue'));
       });
+    },
+    meta: {
+      keepAlive: true
     }
   }, {
     path: '/detail/:dId/:docId',
@@ -106,7 +111,11 @@ router.beforeEach(function (to, from, next) {
     var id = localStorage.getItem('token');
 
     if (id) {
-      next();
+      _this.axios.get("/login/validity/".concat(id)).then(function (res) {
+        if (res.code == 403) next({
+          path: '/login'
+        });else next();
+      });
     } else {
       next({
         path: '/login'
