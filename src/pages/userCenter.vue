@@ -165,7 +165,7 @@ export default {
     }
   },
   created(){
-     this.u_id = window.localStorage.getItem("uid")
+     this.u_id = window.localStorage.getItem("uId")
   },
   mounted(){
     this.getCard();

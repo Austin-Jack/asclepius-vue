@@ -1,6 +1,7 @@
 <template>
   <div>
     <nav-header></nav-header>
+    <!-- <el-button icon="el-icon-back" type="primary">返回</el-button> -->
     <div class="part1">
       <div class="detail_wrap">
         <img
@@ -19,7 +20,7 @@
           </div>
           <div class="text">
             <p>
-              {{doc.docName}}，1996年获中国医学博士学位。在协和医院工作的20多年来先后经历主治医师、副教授。热爱、注重临床工作，刻苦专研，注重理论联系实际，奠定了扎实的医学基础，积累了丰富的临床经验，熟悉疾病的诊断与治疗，熟练应用各种血液净化技术，尤其对疑难危重症患者有行之有效的诊断与治疗措施，曾以主要参加人身份获国家科技进步二等奖二项。
+              {{doc.docName}}，1996年获中国医学博士学位。在林大医院工作的20多年来先后经历主治医师、副教授。热爱、注重临床工作，刻苦专研，注重理论联系实际，奠定了扎实的医学基础，积累了丰富的临床经验，熟悉疾病的诊断与治疗，熟练应用各种血液净化技术，尤其对疑难危重症患者有行之有效的诊断与治疗措施，曾以主要参加人身份获国家科技进步二等奖二项。
             </p>
           </div>
         </div>
@@ -65,6 +66,7 @@
 <script>
 import NavHeader from "../components/NavHeader.vue";
 import NavFooter from "../components/NavFooter.vue";
+import {Button} from 'element-ui'
 export default {
   data() {
     return {
@@ -75,6 +77,7 @@ export default {
   components: {
     NavHeader,
     NavFooter,
+    [Button.name]:Button
   },
   created(){
       this.doc = JSON.parse(this.$route.query.doctor)
@@ -83,6 +86,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .part1 {
   display: flex;
   justify-content: center;

@@ -73,7 +73,7 @@ export default {
     };
   },
   created() {
-    this.cardForm.uId = window.localStorage.getItem("uid")
+    this.cardForm.uId = window.localStorage.getItem("uId")
   },
   methods: {
     
@@ -86,9 +86,12 @@ export default {
         // 通过验证则发送请求 添加就诊人
           const res = await this.axios.post("/private/user/addCard",this.cardForm)
           if(res.data.code === 200){
-          this.$emit("getCard")
+            console.log(res.data.data)
+          this.$emit("getCard",res.data.data)
+          this.$emit('cardCancel',res.data.data)
+
           }else{
-            this.$message.error("添加失败！")
+            this.$message.error("您已存在该就诊卡！")
           }
         } 
       });
