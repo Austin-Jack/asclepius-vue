@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {Form,FormItem,Radio,RadioGroup,Button,Input} from 'element-ui'
+import { Form, FormItem, Radio, RadioGroup, Button, Input } from "element-ui";
 export default {
   data() {
     var checkMobile = (rule, value, cb) => {
@@ -40,14 +40,18 @@ export default {
       // 手机号不合法
       cb(new Error("请输入合法手机号！"));
     };
-
-     var checkCardID = (rule, value, callback) => {
+    var checkName = (r, val, cb) => {
+      var regName = /[\u4e00-\u9fa5]+/;
+      if (regName.test(val)) return cb();
+      cb(new Error("请输入姓名！"));
+    };
+    var checkCardID = (rule, value, callback) => {
       if (!/(^\d{15}$)|(^\d{17}(\d|X|x)$)/.test(value)) {
         callback(new Error("身份证格式错误!"));
       }
       callback();
     };
-   
+
     return {
       // 就诊卡信息
       cardForm: {
@@ -59,7 +63,10 @@ export default {
       },
       // 就诊卡的验证规则
       pcardRules: {
-        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        name: [
+          { required: true, message: "请输入姓名", trigger: "blur" },
+          { validator: checkName, trigger: "blur" },
+        ],
         age: [{ required: true, message: "请输入年龄", trigger: "blur" }],
         telNumber: [
           { required: true, message: "请输入号码", trigger: "blur" },
@@ -73,41 +80,41 @@ export default {
     };
   },
   created() {
-    this.cardForm.uId = window.localStorage.getItem("uId")
+    this.cardForm.uId = window.localStorage.getItem("uId");
   },
   methods: {
-    
     onSubmit() {
       this.$refs.addCardform.validate(async (valid) => {
         // 提交前验证 未通过则返回
         if (!valid) {
           return;
         } else {
-        // 通过验证则发送请求 添加就诊人
-          const res = await this.axios.post("/private/user/addCard",this.cardForm)
-          if(res.data.code === 200){
-            console.log(res.data.data)
-          this.$emit("getCard",res.data.data)
-          this.$emit('cardCancel',res.data.data)
-
-          }else{
-            this.$message.error("您已存在该就诊卡！")
+          // 通过验证则发送请求 添加就诊人
+          const res = await this.axios.post(
+            "/private/user/addCard",
+            this.cardForm
+          );
+          if (res.data.code === 200) {
+            this.$emit("getCard", res.data.data);
+            this.$emit("cardCancel", res.data.data);
+          } else {
+            this.$message.error("您已存在该就诊卡！");
           }
-        } 
+        }
       });
     },
-    cancel(){
-      this.$emit("cancelCard")
-    }
+    cancel() {
+      this.$emit("cancelCard");
+    },
   },
-  components:{
-   [Form.name]:Form,
-   [FormItem.name]:FormItem,
-   [Radio.name]:Radio,
-   [Button.name]:Button,
-   [RadioGroup.name]:RadioGroup,
-   [Input.name]:Input
-  }
+  components: {
+    [Form.name]: Form,
+    [FormItem.name]: FormItem,
+    [Radio.name]: Radio,
+    [Button.name]: Button,
+    [RadioGroup.name]: RadioGroup,
+    [Input.name]: Input,
+  },
 };
 </script>
 

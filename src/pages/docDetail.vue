@@ -1,26 +1,27 @@
 <template>
   <div>
     <nav-header></nav-header>
-    <!-- <el-button icon="el-icon-back" type="primary">返回</el-button> -->
     <div class="part1">
       <div class="detail_wrap">
-        <img
-          class="detail_img"
-          :src="doc.docImage"
-        />
+        <img class="detail_img" :src="doc.docImage" />
         <div class="detail_text">
           <div class="dorname">
-            <div class="title1">{{doc.docName}}</div>
-            <div class="title2">
-              {{rank[doc.docRank]}} 教授 博士研究生导师 Professor
+            <div class="back">
+              <div class="title1">{{ doc.docName }}</div>
+              <el-button icon="el-icon-back" type="info" @click="goback">返回</el-button>
             </div>
             <div class="title2">
-              {{doc.docDetail}}
+              {{ rank[doc.docRank] }} 教授 博士研究生导师 Professor
+            </div>
+            <div class="title2">
+              {{ doc.docDetail }}
             </div>
           </div>
           <div class="text">
             <p>
-              {{doc.docName}}，1996年获中国医学博士学位。在林大医院工作的20多年来先后经历主治医师、副教授。热爱、注重临床工作，刻苦专研，注重理论联系实际，奠定了扎实的医学基础，积累了丰富的临床经验，熟悉疾病的诊断与治疗，熟练应用各种血液净化技术，尤其对疑难危重症患者有行之有效的诊断与治疗措施，曾以主要参加人身份获国家科技进步二等奖二项。
+              {{
+                doc.docName
+              }}，1996年获中国医学博士学位。在林大医院工作的20多年来先后经历主治医师、副教授。热爱、注重临床工作，刻苦专研，注重理论联系实际，奠定了扎实的医学基础，积累了丰富的临床经验，熟悉疾病的诊断与治疗，熟练应用各种血液净化技术，尤其对疑难危重症患者有行之有效的诊断与治疗措施，曾以主要参加人身份获国家科技进步二等奖二项。
             </p>
           </div>
         </div>
@@ -39,21 +40,15 @@
             <span>发布时间：2022.07.07</span>
           </div>
           <div class="item">
-            <span
-              >2-21年度表彰</span
-            >
+            <span>2-21年度表彰</span>
             <span>发布时间：2022.06.20</span>
           </div>
           <div class="item">
-            <span
-              >肾内科开展多形式世界肾脏日主题活动</span
-            >
+            <span>肾内科开展多形式世界肾脏日主题活动</span>
             <span>发布时间：2022.04.21</span>
           </div>
           <div class="item">
-            <span
-              >医院内科学系主任李雪梅获评全国三八红旗手</span
-            >
+            <span>医院内科学系主任李雪梅获评全国三八红旗手</span>
             <span>发布时间：2022.04.18</span>
           </div>
         </div>
@@ -66,21 +61,26 @@
 <script>
 import NavHeader from "../components/NavHeader.vue";
 import NavFooter from "../components/NavFooter.vue";
-import {Button} from 'element-ui'
+import { Button } from "element-ui";
 export default {
   data() {
     return {
-        doc:null,
-        rank:['普通医师','副主任医师','主任医师']
+      doc: null,
+      rank: ["主任医师", "副主任医师", "普通医师"],
     };
   },
   components: {
     NavHeader,
     NavFooter,
-    [Button.name]:Button
+    [Button.name]: Button,
   },
-  created(){
-      this.doc = JSON.parse(this.$route.query.doctor)
+  created() {
+    this.doc = JSON.parse(this.$route.query.doctor);
+  },
+  methods:{
+    goback(){
+      this.$router.back()
+    }
   }
 };
 </script>
@@ -109,6 +109,10 @@ export default {
         padding-bottom: 60px;
         margin-bottom: 45px;
         padding-top: 38px;
+        .back{
+          display: flex;
+          justify-content: space-between;
+        }
         .title1 {
           font-size: 24px;
           color: #333;

@@ -11,14 +11,11 @@
             <div class="item">医生：{{ doctorDetail.docName }}</div>
             <div class="item">
               医生职称：
-              {{ doctorRank[doctorDetail.docRank]}}
+              {{ doctorRank[doctorDetail.docRank] }}
             </div>
             <div class="item">
               门诊时间：
-              <el-select
-                v-model="sId"
-                placeholder="请选择就诊时间"
-              >
+              <el-select v-model="sId" placeholder="请选择就诊时间">
                 <el-option
                   v-for="item in doctorDetail.times"
                   :key="item.sId"
@@ -48,99 +45,104 @@
               >添加就诊人</el-button
             >
           </el-card>
-          <el-button type="primary" class="subBtn" @click="confirmAppoint">确认提交</el-button>
+          <el-button type="primary" class="subBtn" @click="confirmAppoint"
+            >确认提交</el-button
+          >
         </div>
       </div>
     </div>
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-    >
-      <PatientCard @getCard="getCardInfo" @cancelCard = "dialogVisible= false"></PatientCard>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+      <PatientCard
+        @getCard="getCardInfo"
+        @cancelCard="dialogVisible = false"
+      ></PatientCard>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import NavHeader from "../components/NavHeader.vue";
-import PatientCard from '../components/PatientCard.vue'
-import {Dialog,Button,Card,Select,Option,Divider} from 'element-ui'
+import PatientCard from "../components/PatientCard.vue";
+import { Dialog, Button, Card, Select, Option, Divider } from "element-ui";
 
 export default {
   data() {
     return {
-      doctorRank:["主任医师","副主任医师","普通医师"],
+      doctorRank: ["主任医师", "副主任医师", "普通医师"],
       // 预约信息
       cId: null,
       sId: null,
       // 医生及排班信息
-      doctorDetail:{},
+      doctorDetail: {},
       access_time: [],
       // 就诊人信息
       ofPatient: [],
-      dialogVisible:false
+      dialogVisible: false,
     };
   },
-  created(){
-    this.dId = this.$route.params.dId
-    this.docId = this.$route.params.docId
-    this.getPatients()
-    this.getSingleSchedul()
+  created() {
+    this.dId = this.$route.params.dId;
+    this.docId = this.$route.params.docId;
+    this.getPatients();
+    this.getSingleSchedul();
   },
   methods: {
     // 获取该医生信息及排班
-    async getSingleSchedul(){
-      const res = await this.axios.get(`/schedule/doctor/${this.dId}/${this.docId}`,)
-      this.doctorDetail = res.data.data
+    async getSingleSchedul() {
+      const res = await this.axios.get(
+        `/schedule/doctor/${this.dId}/${this.docId}`
+      );
+      this.doctorDetail = res.data.data;
     },
     // 获取就诊人信息
-    async getPatients(){
-      const uId = window.localStorage.getItem("uId")
-      const res = await this.axios.get(`/private/user/getCards?uId=${uId}`)
-      this.ofPatient = res.data.data
+    async getPatients() {
+      const uId = window.localStorage.getItem("uId");
+      const res = await this.axios.get(`/private/user/getCards?uId=${uId}`);
+      this.ofPatient = res.data.data;
     },
     // 打开添加就诊人弹窗
     addCard() {
-      this.dialogVisible = true
+      this.dialogVisible = true;
     },
     // 确认就诊人信息后关闭弹窗
-    getCardInfo(patients){
-      this.dialogVisible= false
+    getCardInfo(patients) {
+      this.dialogVisible = false;
       // 更新就诊人信息
-      this.ofPatient = patients
+      this.ofPatient = patients;
     },
     // 确认提交预约信息
-    async confirmAppoint(){
-      if(this.cId === null || this.sId === null){
+    async confirmAppoint() {
+      if (this.cId === null || this.sId === null) {
         // 提示错误
-        this.$message.error('请填写完整！')
-      }else {
+        this.$message.error("请填写完整！");
+      } else {
         // 请求预约
-        const res = await this.axios.post('/private/user/appointment/add',
-        {cId:this.cId,
-        sId:this.sId,
-        docName:this.doctorDetail.docName,
-        dName:this.doctorDetail.dName,
-        apCost:this.doctorDetail.apCost
-        })
-        if(res.data.code === 200){
-          this.$message.success('挂号成功！')
-        }else{
-          this.$message.error('抱歉，预约已满！')
+        const res = await this.axios.post("/private/user/appointment/add", {
+          cId: this.cId,
+          sId: this.sId,
+          docName: this.doctorDetail.docName,
+          dName: this.doctorDetail.dName,
+          apCost: this.doctorDetail.apCost,
+        });
+        if (res.data.code === 200) {
+          this.$message.success("挂号成功！");
+        } else if (res.data.code === 404) {
+          this.$message.error("抱歉，预约已满！");
+        } else {
+          this.$message.error("请不要重复预约！");
         }
       }
-    }
+    },
   },
   components: {
     NavHeader,
     PatientCard,
-    [Button.name]:Button,
-    [Dialog.name]:Dialog,
-    [Card.name]:Card,
-    [Select.name]:Select,
-    [Option.name]:Option,
-    [Divider.name]:Divider,
+    [Button.name]: Button,
+    [Dialog.name]: Dialog,
+    [Card.name]: Card,
+    [Select.name]: Select,
+    [Option.name]: Option,
+    [Divider.name]: Divider,
   },
 };
 </script>
