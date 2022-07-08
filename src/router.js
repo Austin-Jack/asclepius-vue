@@ -4,62 +4,59 @@ import Index from './pages/index'
 Vue.use(Router)
 
 const router = new Router({
-    routes:[
-        {   
-            path:'/' ,
-            name:'home1',
+    routes: [{
+            path: '/',
+            name: 'home1',
             component: Index,
-            redirect:'/index',
-            children:[
-                {
-                    path:'/index',
-                    name:'index',
-                    component:Index
-                }
-            ]
-            
+            redirect: '/index',
+            children: [{
+                path: '/index',
+                name: 'index',
+                component: Index
+            }]
+
         },
         {
-           path:'/home',
-           name:'home',
-           component: () => import('./pages/home.vue') 
+            path: '/home',
+            name: 'home',
+            component: () => import('./pages/home.vue')
         },
-        {   
-            path:'/appointment/:level' ,
-            name:'appointment',
+        {
+            path: '/appointment/:level',
+            name: 'appointment',
             component: () => import('./pages/appointment.vue'),
             meta: {
                 keepAlive: true
-              }
+            }
         },
         {
-            path:'/detail/:dId/:docId',
-            name:'detail',
-            component:() => import('./pages/AppointDetail.vue')
+            path: '/detail/:dId/:docId',
+            name: 'detail',
+            component: () => import('./pages/AppointDetail.vue')
         },
-        {   
-            path:'/scheduling' ,
-            name:'scheduling',
+        {
+            path: '/scheduling',
+            name: 'scheduling',
             component: () => import('./pages/scheduling.vue')
         },
         {
-            path:'/userCenter',
+            path: '/userCenter',
             component: () => import('./pages/userCenter.vue')
         },
         {
-            path:'/introduction',
-            component:() => import('./pages/introduction.vue')
+            path: '/introduction',
+            component: () => import('./pages/introduction.vue')
         },
         {
-            path:'/history',
+            path: '/history',
             component: () => import('./pages/history.vue')
         },
         {
-            path:'/docdetail',
+            path: '/docdetail',
             component: () => import('./pages/docDetail.vue')
         },
         {
-            path:'/login',
+            path: '/login',
             component: () => import('./pages/login.vue')
         }
 
@@ -67,15 +64,23 @@ const router = new Router({
 })
 
 
-router.beforeEach((to,from,next)=>{
-     if(to.path === '/userCenter'){
+router.beforeEach((to, from, next) => {
+    if (to.path === '/userCenter') {
         const id = localStorage.getItem('token')
-        if(id){ next()}
-        else {next({
-            path:'/login'
-        })}
-     }else{
+        if (id) {
+            this.axios.get(`/login/validity/${id}`).then(res => {
+                if (res.code == 403) next({
+                    path: '/login'
+                })
+                else next()
+            })
+        } else {
+            next({
+                path: '/login'
+            })
+        }
+    } else {
         next()
-     }
+    }
 })
-  export default router
+export default router
