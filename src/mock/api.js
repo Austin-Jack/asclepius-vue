@@ -436,21 +436,11 @@ Mock.mock(RegExp("/api/private/user/getCards" + ".*"), {data:[
 });
 
 // 添加就诊人
-Mock.mock("/api/private/user/addCard", "post", (options) => {
-  console.log(options.body);
+Mock.mock("/api/private/user/addCard", "post", () => {
   return {
     code: 200,
     message: "",
     data: null,
-    // form:{
-    //   "uId":uId,
-    //   "cId": "@increment()",
-    //   "identityID": identityID, //身份证
-    //   "sex": sex, //性别
-    //   "age": age, //年龄
-    //   "name": name, //姓名
-    //   "telNumber": telNumber //电话号码
-    // }
   };
 });
 Mock.mock("/api/appointment/add","post",()=>{

@@ -87,7 +87,7 @@
           </div>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button @click="cancel">取 消</el-button>
           <el-button type="primary" @click="gotoRegister">确 定</el-button>
         </div>
       </el-dialog>
@@ -198,9 +198,7 @@ export default {
     async gotoRegister() {
       //此处请求获取验证结果 验证成功则获取卡信息跳转至预约界面
       const res = await this.axios.get(`/login/${this.verificationCode}`);
-      if (res.code === 422) {
-        this.showError = true;
-      } else {
+      if (res.data.code === 200) {
         window.localStorage.setItem("uId", res.data.data.uId);
         window.localStorage.setItem(
           "token",res.data.data.token
@@ -208,9 +206,18 @@ export default {
         this.dialogFormVisible = false;
         this.$router.push({
           path: `/detail/${this.dId}/${this.docId}`,
-        });
+        });     
+      } else {
+        this.verificationCode = null
+        this.showError = true;
       }
     },
+    // 取消关闭验证弹窗
+    cancel(){
+      this.verificationCode = null
+      this.dialogFormVisible = false
+    },
+    // 前往医生详情
     goDetail(doc){
       this.$router.push({
         path:`/docdetail`,
