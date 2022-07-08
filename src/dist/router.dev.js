@@ -85,16 +85,36 @@ var router = new _vueRouter["default"]({
         return _interopRequireWildcard(require('./pages/history.vue'));
       });
     }
+  }, {
+    path: '/docdetail',
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/docDetail.vue'));
+      });
+    }
+  }, {
+    path: '/login',
+    component: function component() {
+      return Promise.resolve().then(function () {
+        return _interopRequireWildcard(require('./pages/login.vue'));
+      });
+    }
   }]
-}); // router.beforeEach((to,from,next)=>{
-//      if(to.path === '/userCenter'){
-//         const id = localStorage.getItem('token')
-//         if(id){ next()}
-//         else { alert('请先进行登录') }
-//      }else{
-//         next()
-//      }
-//   })
+});
+router.beforeEach(function (to, from, next) {
+  if (to.path === '/userCenter') {
+    var id = localStorage.getItem('token');
 
+    if (id) {
+      next();
+    } else {
+      next({
+        path: '/login'
+      });
+    }
+  } else {
+    next();
+  }
+});
 var _default = router;
 exports["default"] = _default;

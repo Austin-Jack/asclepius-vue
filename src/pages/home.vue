@@ -95,7 +95,7 @@
             class="item"
             edit_params="title1Show%3D1%26title6Show%3D1%26title1Max%3D8%26title6Max%3D30%26showLink%3D1"
           >
-            <a href="javascript:;">
+            <a href="/#/userCenter">
               <div class="middle">
                 <div class="middle-cont">
                   <div class="img">
