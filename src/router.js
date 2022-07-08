@@ -54,19 +54,25 @@ const router = new Router({
         {
             path:'/docdetail',
             component: () => import('./pages/docDetail.vue')
+        },
+        {
+            path:'/login',
+            component: () => import('./pages/login.vue')
         }
 
     ]
 })
 
 
-// router.beforeEach((to,from,next)=>{
-//      if(to.path === '/userCenter'){
-//         const id = localStorage.getItem('token')
-//         if(id){ next()}
-//         else { alert('请先进行登录') }
-//      }else{
-//         next()
-//      }
-//   })
+router.beforeEach((to,from,next)=>{
+     if(to.path === '/userCenter'){
+        const id = localStorage.getItem('token')
+        if(id){ next()}
+        else {next({
+            path:'/login'
+        })}
+     }else{
+        next()
+     }
+})
   export default router

@@ -16,8 +16,6 @@ var _elementUi = require("element-ui");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// import ElementUI from "element-ui";
-// import "element-ui/lib/theme-chalk/index.css";
 var mock = false;
 
 if (mock) {
@@ -30,7 +28,8 @@ _axios["default"].interceptors.request.use(function (config) {
   // config为请求对象 拦截后必须return
   config.headers.Authorization = window.localStorage.getItem("token");
   return config;
-});
+}); //借口错误拦截
+
 
 _vue["default"].config.productionTip = false;
 _vue["default"].prototype.axios = _axios["default"]; // Vue.use(ElementUI);

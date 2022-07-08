@@ -3,11 +3,13 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
-// import ElementUI from "element-ui";
-// import "element-ui/lib/theme-chalk/index.css";
 import "./assets/font/iconfont.css"
-import {Message} from 'element-ui'
-import {MessageBox} from 'element-ui'
+import {
+  Message
+} from 'element-ui'
+import {
+  MessageBox
+} from 'element-ui'
 const mock = false;
 if (mock) {
   require("./mock/api");
@@ -19,6 +21,9 @@ axios.interceptors.request.use((config) => {
   config.headers.Authorization = window.localStorage.getItem("token");
   return config;
 });
+//借口错误拦截
+
+
 Vue.config.productionTip = false;
 Vue.prototype.axios = axios;
 // Vue.use(ElementUI);
@@ -34,7 +39,7 @@ Vue.filter("formatTime", function (val) {
   h = h <= 12 ? "上午" : "下午";
   return y + "-" + MM + "-" + d + " " + h;
 });
-Vue.prototype.$message = Message 
+Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm;
 new Vue({
   router,
