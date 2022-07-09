@@ -20,7 +20,7 @@
           <a href="javascript:;" class="items">中文版</a>
           <a href="javascript:;" class="items">EN</a>
           <a href="/#/home" class="items">欢迎页</a>
-          <a href="/#/userCenter">个人中心</a>
+          <a href="javascript:;" @click="confirm">个人中心</a>
           <a href="javascript:;"><span class="item"></span></a>
         </div>
       </div>
@@ -53,6 +53,20 @@ export default{
   methods:{
     sendLevel(level){
       this.$emit('sendLevel',level)
+    },
+    confirm(){
+      const id = localStorage.getItem('token')
+      if(id){
+      this.axios.get(`/login/validity`).then(res => {
+        if(res.data.code == 403){
+          this.$router.push('/login')
+        }else{
+          this.$router.push('/usercenter')
+        }
+      })
+    }else{
+      this.$router.push('/login')
+    }
     }
   }
 }

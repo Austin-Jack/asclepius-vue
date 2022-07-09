@@ -64,23 +64,4 @@ const router = new Router({
 })
 
 
-router.beforeEach((to, from, next) => {
-    if (to.path === '/userCenter') {
-        const id = localStorage.getItem('token')
-        if (id) {
-            this.axios.get(`/login/validity/${id}`).then(res => {
-                if (res.code == 403) next({
-                    path: '/login'
-                })
-                else next()
-            })
-        } else {
-            next({
-                path: '/login'
-            })
-        }
-    } else {
-        next()
-    }
-})
 export default router
