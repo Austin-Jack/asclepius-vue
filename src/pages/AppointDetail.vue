@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="添加" :visible.sync="dialogVisible" width="30%">
       <PatientCard
         @getCard="getCardInfo"
         @cancelCard="dialogVisible = false"
@@ -126,6 +126,7 @@ export default {
         });
         if (res.data.code === 200) {
           this.$message.success("挂号成功！");
+          this.$router.back()
         } else if (res.data.code === 404) {
           this.$message.error("抱歉，预约已满！");
         } else {
