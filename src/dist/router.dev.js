@@ -11,8 +11,6 @@ var _vueRouter = _interopRequireDefault(require("vue-router"));
 
 var _index = _interopRequireDefault(require("./pages/index"));
 
-var _this = void 0;
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -105,25 +103,6 @@ var router = new _vueRouter["default"]({
       });
     }
   }]
-});
-router.beforeEach(function (to, from, next) {
-  if (to.path === '/userCenter') {
-    var id = localStorage.getItem('token');
-
-    if (id) {
-      _this.axios.get("/login/validity/".concat(id)).then(function (res) {
-        if (res.code == 403) next({
-          path: '/login'
-        });else next();
-      });
-    } else {
-      next({
-        path: '/login'
-      });
-    }
-  } else {
-    next();
-  }
 });
 var _default = router;
 exports["default"] = _default;
