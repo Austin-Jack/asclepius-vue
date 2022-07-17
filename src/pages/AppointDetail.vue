@@ -34,6 +34,7 @@
                 :key="p.cId"
                 :label="p.name"
                 :value="p.cId"
+                @change="getCname"
               ></el-option>
             </el-select>
             <el-button
@@ -72,6 +73,7 @@ export default {
       // 预约信息
       cId: null,
       sId: null,
+      cname:"",
       // 医生及排班信息
       doctorDetail: {},
       access_time: [],
@@ -100,6 +102,13 @@ export default {
       const res = await this.axios.get(`/private/user/getCards?uId=${uId}`);
       this.ofPatient = res.data.data;
     },
+    // 选择下拉时传递cname
+    getCname(){
+      let p = this.ofPatient.find((p)=>{
+        p.cId = this.cId
+      })
+      this.cname = p.name
+    },
     // 打开添加就诊人弹窗
     addCard() {
       this.dialogVisible = true;
@@ -120,6 +129,7 @@ export default {
         const res = await this.axios.post("/private/user/appointment/add", {
           cId: this.cId,
           sId: this.sId,
+          cName:this.cname,
           docName: this.doctorDetail.docName,
           dName: this.doctorDetail.dName,
           apCost: this.doctorDetail.apCost,
