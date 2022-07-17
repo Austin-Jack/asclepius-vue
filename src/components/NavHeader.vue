@@ -55,7 +55,7 @@ export default{
       this.$emit('sendLevel',level)
     },
     confirm(){
-      const id = localStorage.getItem('token')
+      const id = window.localStorage.getItem('token')
       if(id){
       this.axios.get(`/login/validity`).then(res => {
         if(res.data.code == 403){

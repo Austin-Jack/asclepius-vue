@@ -66,12 +66,12 @@ export default {
           window.localStorage.setItem("uId", res.data.data.uId);
           window.localStorage.setItem("token", res.data.data.token);
           this.dialogVisible = false;
-          this.$router.go(-2);
+          this.$router.push('/userCenter')
         }
       }
     },
     back() {
-      this.$router.go(-2);
+      this.$router.go(-1);
     },
   },
 };
