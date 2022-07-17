@@ -3,13 +3,8 @@
   <div>
     <div class="wrap">
       <div class="nav-menu">
-        <el-menu
-          default-active="2"
-          class="el-menu-vertical-demo"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-        >
+        <el-menu default-active="2" class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff"
+          active-text-color="#ffd04b">
           <el-menu-item index="1">
             <template slot="title">
               <i class="iconfont icon-yonghuzhongxin"></i>
@@ -40,30 +35,17 @@
         <div class="card" v-show="card">
           <div class="addCard">
             <el-button class="add" type="success" @click="dialogVisible = true">添加就诊卡</el-button>
-            <el-dialog
-              title="提示"
-              :visible.sync="dialogVisible"
-              width="30%"
-            >
-               <PatientCard @cardCancel="reflashCards" ></PatientCard>
-               <!-- <PatientCard @cancelCard = "dialogVisible= false"></PatientCard> -->
+            <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+              <PatientCard @cardCancel="reflashCards"></PatientCard>
+              <!-- <PatientCard @cancelCard = "dialogVisible= false"></PatientCard> -->
             </el-dialog>
-            
+
           </div>
           <div class="card-wrap">
-            <el-card
-              class="box-card information"
-              v-for="item in cardForm"
-              :key="item.cId"
-            >
+            <el-card class="box-card information" v-for="item in cardForm" :key="item.cId">
               <div slot="header" class="clearfix">
                 <span>就诊卡</span>
-                <el-button
-                  style="float: right; padding: 3px 0"
-                  type="danger"
-                  @click="open1(item.cId)"
-                  >删除就诊卡</el-button
-                >
+                <el-button style="float: right; padding: 3px 0" type="danger" @click="open1(item.cId)">删除就诊卡</el-button>
               </div>
               <div class="text item">就诊卡号: {{ item.cId }}</div>
               <div class="text item">身份证号: {{ item.identityID }}</div>
@@ -78,15 +60,8 @@
         </div>
         <div class="appoint" v-show="appoint">
           <div class="appoint-wrap">
-            <el-descriptions
-              class="margin-top detail"
-              title="预约信息"
-              :column="3"
-              :size="size"
-              border
-              v-for="item in appointForm"
-              :key="item.apId"
-            >
+            <el-descriptions class="margin-top detail" title="预约信息" :column="3" :size="size" border
+              v-for="item in appointForm" :key="item.apId">
               <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-time"></i>
@@ -106,7 +81,7 @@
                   <i class="el-icon-time"></i>
                   预约时间
                 </template>
-                {{ item.apTime | formatTime}}
+                {{ item.apTime | formatTime }}
               </el-descriptions-item>
               <el-descriptions-item>
                 <template slot="label">
@@ -134,32 +109,28 @@
                   <i class="el-icon-tickets"></i>
                   门诊类型
                 </template>
-                <span
-                  v-text="
-                    item.cLevel <= 1
-                      ? item.cLevel == 0
-                        ? '普通门诊'
-                        : '专家门诊'
-                      : '国际门诊'
-                  "
-                ></span>
+                <span v-text="
+                  item.cLevel <= 1
+                    ? item.cLevel == 0
+                      ? '普通门诊'
+                      : '专家门诊'
+                    : '国际门诊'
+                "></span>
               </el-descriptions-item>
               <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-tickets"></i>
                   订单状态
                 </template>
-                <span
-                  v-text="
-                    item.apStatus <= 1
-                      ? item.apStatus == 0
-                        ? '已创建'
-                        : '已取消'
-                      : item.apStatus == 2
+                <span v-text="
+                  item.apStatus <= 1
+                    ? item.apStatus == 0
+                      ? '已创建'
+                      : '已取消'
+                    : item.apStatus == 2
                       ? '已取消'
                       : '已完成'
-                  "
-                ></span>
+                "></span>
               </el-descriptions-item>
               <el-descriptions-item>
                 <template slot="label">
@@ -173,35 +144,18 @@
                   <i class="el-icon-warning"></i>
                   操作
                 </template>
-                <el-button
-                  type="danger"
-                  size="small"
-                  @click="open(item.sId, item.cId)"
-                  v-show="item.apStatus == 0"
-                  >取消预约</el-button
-                >
+                <el-button type="danger" size="small" @click="open(item.sId, item.cId)" v-show="item.apStatus == 0">取消预约
+                </el-button>
               </el-descriptions-item>
             </el-descriptions>
           </div>
-           <el-pagination
-             layout="prev, pager, next"
-             :total="total"
-             :pageSize="pageSize"
-             @current-change="handleChange"
-             >
-           </el-pagination>
+          <el-pagination layout="prev, pager, next" :total="total" :pageSize="pageSize" @current-change="handleChange">
+          </el-pagination>
         </div>
         <div class="medcine" v-show="medcine">
-         <div class="medcine-wrap">
-         <el-descriptions
-              class="margin-top detail"
-              title="处方药信息"
-              :column="3"
-              :size="size"
-              border
-              v-for="item in medcineForm"
-              :key="item.apId"
-            >
+          <div class="medcine-wrap">
+            <el-descriptions class="margin-top detail" title="处方药信息" :column="3" :size="size" border
+              v-for="item in medcineForm" :key="item.apId">
               <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-time"></i>
@@ -216,7 +170,7 @@
                 </template>
                 {{ item.patient }}
               </el-descriptions-item>
-                <el-descriptions-item>
+              <el-descriptions-item>
                 <template slot="label">
                   <i class="el-icon-user"></i>
                   处方详细描述
@@ -235,11 +189,12 @@
                   <i class="el-icon-star-off"></i>
                   处方状态
                 </template>
-                {{ item.preStatus?'已取药':'待取药'}}
+                {{ item.preStatus ? '已取药' : '待取药' }}
               </el-descriptions-item>
-          </el-descriptions></div>
+            </el-descriptions>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -283,17 +238,17 @@ export default {
       medcine: false,
       cardForm: [], //就诊卡信息
       appointForm: [],  //预约信息
-      medcineForm:[], //处方药信息
+      medcineForm: [], //处方药信息
       u_id: "",
       size: "",
-      dialogVisible:false,
-      pageSize:3,
-      pageNum:1,
-      total:0
+      dialogVisible: false,
+      pageSize: 3,
+      pageNum: 1,
+      total: 0
     };
   },
-  created(){
-     this.u_id = window.localStorage.getItem("uId")
+  created() {
+    this.u_id = window.localStorage.getItem("uId")
   },
   mounted() {
     this.getCard();
@@ -311,44 +266,49 @@ export default {
         this.appoint = false;
         this.medcine = false;
         this.card = true;
+        this.getCard();
       } else if (id == 2) {
         this.card = false;
         this.medcine = false;
         this.appoint = true;
+        this.getAppoint();
+
       } else if (id == 3) {
         this.card = false;
         this.appoint = false;
         this.medcine = true;
+        this.getMedcine()
+
       }
     },
     //获取就诊卡信息
     getCard() {
       this.axios.get(`/private/user/getCards?uId=${this.u_id}`).then((res) => {
-        if(res.data.code == 200 || res.data.code == 201){
-        this.cardForm = res.data.data;
-        }else{
+        if (res.data.code == 200 || res.data.code == 201) {
+          this.cardForm = res.data.data;
+        } else {
           this.$message.error('获取就诊卡失败')
         }
       });
     },
-    reflashCards(res){
+    reflashCards(res) {
       this.dialogVisible = false
       this.cardForm = res
     },
     //获取预约信息
     getAppoint() {
       this.axios.get(`/private/user/aplist/${this.u_id}/${this.pageNum}`).then((res) => {
-        if(res.data.code == 200){
-        this.appointForm = res.data.data;
-        this.total = Number(res.data.message)
-        }else{
+        if (res.data.code == 200) {
+          this.appointForm = res.data.data;
+          this.total = Number(res.data.message)
+        } else {
           this.$message.error('获取预约失败')
         }
       });
     },
     //获取处方药信息
-    getMedcine(){
-        this.axios.get(`/private/user/prescribe?uId=${this.u_id}`).then((res) => {
+    getMedcine() {
+      this.axios.get(`/private/user/prescribe?uId=${this.u_id}`).then((res) => {
         this.medcineForm = res.data.data;
       });
     },
@@ -361,12 +321,12 @@ export default {
     },
     //取消预约
     cancelAppoint(sId, cId) {
-      this.axios.delete(`/private/user/cancel/${sId}/${cId}`).then((res) => {
+      this.axios.delete(`/private/user/cancel/${sId}/${cId}/${this.pageNum}`).then((res) => {
         this.appointForm = res.data.data;
       })
     },
     //重新请求数据
-    renderData() {},
+    renderData() { },
     //取消预约弹窗
     open(sId, cId) {
       this.$confirm("此操作将取消该预约, 是否继续?", "提示", {
@@ -409,9 +369,9 @@ export default {
           });
         });
     },
-    handleChange(pageNum){
-     this.pageNum = pageNum
-     this.getAppoint()
+    handleChange(pageNum) {
+      this.pageNum = pageNum
+      this.getAppoint()
     }
   },
 };
@@ -425,30 +385,38 @@ export default {
 .wrap {
   display: flex;
   width: 100%;
+
   .nav-menu {
     flex: 1;
+
     .el-menu {
       height: 900px;
+
       .el-submenu__icon-arrow {
         display: none;
       }
+
       .iconfont {
         padding-right: 10px;
       }
     }
   }
+
   .content {
     flex: 4;
     position: relative;
+
     .back {
       width: 100%;
       box-sizing: border-box;
       border: 1px solid $colorF;
+
       .back-bar {
         height: 50px;
         line-height: 50px;
       }
     }
+
     .head-logo {
       position: absolute;
       top: 0;
@@ -457,19 +425,23 @@ export default {
       cursor: pointer;
       @include bgImg(50px, 50px, "../assets/imgs/head/head2.png");
     }
+
     .card {
       position: absolute;
       width: 100%;
       height: 848px;
       background-color: antiquewhite;
+
       .add {
         position: absolute;
         top: 0;
         left: 5px;
       }
+
       .card-wrap {
-        padding-top:25px;
+        padding-top: 25px;
         display: flex;
+
         .information {
           display: inline-block;
           width: 48%;
@@ -480,6 +452,7 @@ export default {
           font-weight: 400;
           border: 1px solid black;
         }
+
         .cancle {
           position: absolute;
           top: 55px;
@@ -487,10 +460,12 @@ export default {
         }
       }
     }
+
     .appoint {
       position: absolute;
       width: 100%;
       height: 848px;
+
       .appoint-wrap {
         .detail {
           border: 1px solid rgb(235, 238, 245);
@@ -498,12 +473,14 @@ export default {
         }
       }
     }
+
     .medcine {
       position: absolute;
       width: 100%;
       height: 848px;
-      .medcine-wrap{
-         .detail {
+
+      .medcine-wrap {
+        .detail {
           border: 1px solid rgb(235, 238, 245);
           margin-top: 20px;
         }

@@ -94,9 +94,9 @@ export default {
           this.getTableData()
       },
       getTableData(){
-         for(let items of this.Data){     
-          this.List_data.push(items)
-          }
+        //  for(let items of this.Data){     
+          this.List_data = this.Data
+          // }
           this.applyList(this.List_data)  
          },
       
